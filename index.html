@@ -4,19 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yeni Yıl Kartı</title>
+    <!-- Fontlar -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <script type="importmap">
-    {
-      "imports": {
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-        "react/": "https://aistudiocdn.com/react@^19.2.1/",
-        "react": "https://aistudiocdn.com/react@^19.2.1"
-      }
-    }
-    </script>
 
     <style>
       :root {
@@ -33,6 +24,7 @@
         background-color: var(--color-bg-dark);
         font-family: 'Playfair Display', serif;
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
       }
 
       /* Layout */
@@ -62,11 +54,11 @@
       @media (max-width: 600px) {
         .app-container {
           padding: 0;
-          align-items: flex-start; /* Ensure top alignment on mobile */
+          align-items: flex-start;
         }
         .card {
           width: 100%;
-          height: 100dvh; /* Dynamic viewport height */
+          height: 100dvh;
           border-width: 8px;
           border-radius: 0;
         }
@@ -96,9 +88,21 @@
       }
 
       /* Typography */
+      .top-section {
+        position: relative;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1.5rem;
+        margin-bottom: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
       .greeting-title {
         font-family: 'Cinzel', serif;
-        font-size: 2.25rem; /* 36px */
+        font-size: 2.25rem;
         line-height: 1.1;
         color: var(--color-gold);
         font-weight: 700;
@@ -121,6 +125,7 @@
         justify-content: center;
         text-align: center;
         text-transform: uppercase;
+        width: 100%;
       }
 
       @media (min-width: 601px) {
@@ -161,6 +166,8 @@
         max-height: 100%;
         object-fit: contain;
         filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+        /* Aspect Ratio koruması */
+        aspect-ratio: 1015 / 708;
       }
 
       /* Footer Badge */
@@ -199,7 +206,6 @@
         .badge-text { font-size: 0.875rem; }
       }
 
-      /* SVG Utilities */
       .badge-svg {
         position: absolute;
         inset: 0;
@@ -207,7 +213,7 @@
         height: 100%;
       }
 
-      /* Snowfall Container */
+      /* Snowfall Animation */
       .snowfall-container {
         position: absolute;
         inset: 0;
@@ -220,10 +226,138 @@
         background-color: white;
         border-radius: 50%;
         filter: blur(0.5px);
+        top: -20px;
+      }
+
+      @keyframes fall {
+        0% { transform: translateY(-20px) translateX(0px); }
+        25% { transform: translateY(25vh) translateX(10px); }
+        50% { transform: translateY(50vh) translateX(-10px); }
+        75% { transform: translateY(75vh) translateX(10px); }
+        100% { transform: translateY(110vh) translateX(0px); }
       }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+
+    <div class="app-container">
+      <main class="card">
+        
+        <!-- Texture/Noise Overlay -->
+        <div class="texture-overlay"></div>
+        
+        <!-- Snowfall Effect -->
+        <div id="snowfall-container" class="snowfall-container"></div>
+
+        <!-- TOP CONTENT: GREETING -->
+        <div class="top-section">
+          <h1 class="greeting-title">
+            İYİ<br/>YILLAR
+          </h1>
+
+          <!-- Dynamic Name -->
+          <h2 id="name-text" class="name-text">
+            YÜKLENİYOR...
+          </h2>
+          
+          <!-- Divider -->
+          <div class="dots-divider">
+             <div class="dot"></div>
+             <div class="dot"></div>
+             <div class="dot"></div>
+          </div>
+        </div>
+
+        <!-- MIDDLE CONTENT: USER IMAGE -->
+        <div class="image-container">
+           <img 
+              id="main-image"
+              src="./yilbasi_gorseli.png" 
+              alt="Yeni Yıl Görseli" 
+              class="main-image"
+           />
+        </div>
+
+        <!-- FOOTER: BADGE -->
+        <div class="footer-section">
+          <div class="badge-wrapper">
+            <!-- Inline SVG for Badge -->
+            <svg viewBox="0 0 300 60" class="badge-svg" fill="none">
+              <path d="M10,30 L40,30" stroke="#D4AF37" stroke-width="1" />
+              <circle cx="45" cy="30" r="2" fill="#D4AF37" />
+              <path d="M260,30 L290,30" stroke="#D4AF37" stroke-width="1" />
+              <circle cx="255" cy="30" r="2" fill="#D4AF37" />
+              <path d="M50,10 H250 V50 H50 Z" stroke="#D4AF37" stroke-width="1" />
+              <path d="M52,12 H248 V48 H52 Z" stroke="#D4AF37" stroke-width="0.5" opacity="0.6" />
+            </svg>
+            <span class="badge-text">
+              Season's Greetings
+            </span>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <script>
+      // 1. DYNAMIC NAME LOGIC
+      document.addEventListener('DOMContentLoaded', () => {
+        const nameElement = document.getElementById('name-text');
+        const params = new URLSearchParams(window.location.search);
+        const encodedName = params.get('ad');
+
+        if (encodedName) {
+          try {
+            // Base64 decode
+            const decodedName = atob(encodedName);
+            // Türkçe karakter desteği için decodeURIComponent escape hack (opsiyonel, basit atob yeterliyse gerekmez ama güvenlidir)
+            // Basit atob kullanıyoruz kullanıcı isteği üzerine:
+            nameElement.textContent = decodedName;
+          } catch (e) {
+            console.error("İsim çözülemedi:", e);
+            nameElement.textContent = 'DOSTUM';
+          }
+        } else {
+          nameElement.textContent = 'SENİN';
+        }
+
+        // 2. IMAGE FALLBACK LOGIC
+        const imgElement = document.getElementById('main-image');
+        imgElement.onerror = function() {
+          this.onerror = null; // Sonsuz döngüyü engelle
+          // Placeholder servisi
+          this.src = "https://placehold.co/1015x708/133525/D4AF37?text=Görsel+Bulunamadı+(1015x708)";
+          this.style.border = "1px dashed rgba(212, 175, 55, 0.5)";
+        };
+
+        // 3. SNOWFALL ANIMATION LOGIC
+        const snowContainer = document.getElementById('snowfall-container');
+        const flakeCount = 40;
+
+        for (let i = 0; i < flakeCount; i++) {
+          const flake = document.createElement('div');
+          flake.classList.add('snowflake');
+          
+          // Random özellikler
+          const left = Math.random() * 100; // %
+          const duration = 8 + Math.random() * 12; // 8-20s arası
+          const opacity = 0.2 + Math.random() * 0.6;
+          const size = 3 + Math.random() * 4; // px
+          const delay = Math.random() * 10; // s
+
+          flake.style.left = left + '%';
+          flake.style.width = size + 'px';
+          flake.style.height = size + 'px';
+          flake.style.opacity = opacity;
+          flake.style.animationName = 'fall';
+          flake.style.animationDuration = duration + 's';
+          flake.style.animationTimingFunction = 'linear';
+          flake.style.animationIterationCount = 'infinite';
+          flake.style.animationDelay = '-' + delay + 's'; // Eksi değer ile hemen başla
+
+          snowContainer.appendChild(flake);
+        }
+      });
+    </script>
   </body>
 </html>
