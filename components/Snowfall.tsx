@@ -30,7 +30,7 @@ export const Snowfall: React.FC = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
+    <div className="snowfall-container">
       <style>
         {`
           @keyframes fall {
@@ -55,7 +55,7 @@ export const Snowfall: React.FC = () => {
       {snowflakes.map((flake) => (
         <div
           key={flake.id}
-          className="absolute bg-white rounded-full blur-[0.5px]"
+          className="snowflake"
           style={{
             left: `${flake.left}%`,
             top: `-20px`,

@@ -4,27 +4,225 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yeni Yıl Kartı</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+        "react/": "https://aistudiocdn.com/react@^19.2.1/",
+        "react": "https://aistudiocdn.com/react@^19.2.1"
+      }
+    }
+    </script>
+
     <style>
+      :root {
+        --color-bg-dark: #0f172a;
+        --color-card-bg: #1A4731;
+        --color-card-border: #133525;
+        --color-gold: #D4AF37;
+        --color-text-white: #F2F2F2;
+      }
+
       body {
         margin: 0;
         padding: 0;
-        background-color: #0f172a; /* Slate 900 outside */
+        background-color: var(--color-bg-dark);
+        font-family: 'Playfair Display', serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Layout */
+      .app-container {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .card {
+        position: relative;
+        background-color: var(--color-card-bg);
+        border: 8px solid var(--color-card-border);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        padding: 2rem 0;
+        box-sizing: border-box;
+        z-index: 1;
+      }
+
+      /* Responsive Rules */
+      @media (max-width: 600px) {
+        .app-container {
+          padding: 0;
+          align-items: flex-start; /* Ensure top alignment on mobile */
+        }
+        .card {
+          width: 100%;
+          height: 100dvh; /* Dynamic viewport height */
+          border-width: 8px;
+          border-radius: 0;
+        }
+      }
+
+      @media (min-width: 601px) {
+        .app-container {
+          padding: 1rem;
+        }
+        .card {
+          width: 450px;
+          height: 650px;
+          border-radius: 12px;
+          border-width: 12px;
+        }
+      }
+
+      /* Texture Overlay */
+      .texture-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: white;
+        opacity: 0.02;
+        pointer-events: none;
+        z-index: 0;
+        mix-blend-mode: overlay;
+      }
+
+      /* Typography */
+      .greeting-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2.25rem; /* 36px */
+        line-height: 1.1;
+        color: var(--color-gold);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin: 0;
+      }
+
+      .name-text {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: var(--color-text-white);
+        text-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        letter-spacing: 0.025em;
+        margin-top: 0.75rem;
+        min-height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      @media (min-width: 601px) {
+        .greeting-title { font-size: 3rem; }
+        .name-text { font-size: 2.25rem; }
+      }
+
+      /* Decoration Elements */
+      .dots-divider {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        background-color: var(--color-gold);
+        border-radius: 50%;
+        opacity: 0.8;
+      }
+
+      /* Image Section */
+      .image-container {
+        flex: 1;
+        width: 100%;
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      .main-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+      }
+
+      /* Footer Badge */
+      .footer-section {
+        position: relative;
+        z-index: 30;
+        width: 100%;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+
+      .badge-wrapper {
+        position: relative;
+        width: 16rem;
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .badge-text {
+        font-family: 'Cinzel', serif;
+        color: var(--color-gold);
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: 0.25rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      @media (min-width: 601px) {
+        .badge-text { font-size: 0.875rem; }
+      }
+
+      /* SVG Utilities */
+      .badge-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Snowfall Container */
+      .snowfall-container {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 10;
+      }
+      .snowflake {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+        filter: blur(0.5px);
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1"
-  }
-}
-</script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
   </body>
