@@ -1,13 +1,13 @@
-<!-- UPDATE CHECKPOINT: v3.1 - Force GitHub Refresh -->
+<!-- UPDATE CHECKPOINT: v5.0 - Obfuscated Theme Trigger -->
 <!DOCTYPE html>
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <!-- viewport-fit=cover eklendi: Sayfanın tüm ekrana yayılmasını sağlar, safe-area padding ile kontrol edeceğiz -->
+    <!-- viewport-fit=cover: Sayfanın tüm ekrana yayılmasını sağlar -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     
-    <!-- Mobil Tarayıcı Renk Uyumu -->
-    <meta name="theme-color" content="#0f2b1d" />
+    <!-- Mobil Tarayıcı Renk Uyumu (Default Yeşil, JS ile değişebilir) -->
+    <meta id="theme-color-meta" name="theme-color" content="#0f2b1d" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     
@@ -19,8 +19,10 @@
 
     <style>
       :root {
+        /* Varsayılan Renkler (Yeşil Tema) */
         --color-bg-dark: #0f2b1d;
         --color-bg-light: #1A4731;
+        
         --color-gold-start: #F2D06B;
         --color-gold-end: #B38728;
       }
@@ -29,6 +31,7 @@
       html {
         background-color: var(--color-bg-dark);
         height: 100%;
+        transition: background-color 0.5s ease;
       }
 
       body {
@@ -46,6 +49,7 @@
         top: 0;
         right: 0;
         bottom: 0;
+        transition: background 0.5s ease;
       }
 
       /* Layout */
@@ -87,7 +91,7 @@
         z-index: 20;
         position: relative;
         width: 100%;
-        margin-top: 40px; 
+        margin-top: 50px; 
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -210,6 +214,12 @@
         opacity: 0.9;
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
       }
+      
+      /* SVG içindeki dairelerin rengini CSS değişkenine bağladık */
+      .corner-dot {
+          fill: var(--color-bg-dark);
+          transition: fill 0.5s ease;
+      }
 
       .top-left { 
           top: 0; 
@@ -263,33 +273,33 @@
     <!-- Snowfall Effect -->
     <div id="snowfall-container" class="snowfall-container"></div>
 
-    <!-- Süsler Container dışına alındı (Fixed olduğu için fark etmez ama daha temiz) -->
+    <!-- Süsler Container dışına alındı -->
     <svg class="corner-decoration top-left" viewBox="0 0 100 100">
       <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
       <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
       <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
     </svg>
 
     <svg class="corner-decoration top-right" viewBox="0 0 100 100">
       <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
       <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
       <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
     </svg>
 
     <svg class="corner-decoration bottom-left" viewBox="0 0 100 100">
       <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
       <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
       <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
     </svg>
 
     <svg class="corner-decoration bottom-right" viewBox="0 0 100 100">
       <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
       <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
       <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
     </svg>
 
     <div class="app-container">
@@ -334,9 +344,36 @@
         }
       }
 
+      function applyTheme(isRed) {
+        const root = document.documentElement;
+        const metaThemeColor = document.getElementById('theme-color-meta');
+        
+        if (isRed) {
+            // Koyu Bordo / Kırmızı Tema (ztxy tetikleyicisi varsa)
+            root.style.setProperty('--color-bg-dark', '#2b0a0a'); // Çok koyu bordo
+            root.style.setProperty('--color-bg-light', '#591414'); // Canlı koyu kırmızı
+            if (metaThemeColor) metaThemeColor.setAttribute('content', '#2b0a0a');
+        } else {
+            // Varsayılan Yeşil Tema
+            root.style.setProperty('--color-bg-dark', '#0f2b1d');
+            root.style.setProperty('--color-bg-light', '#1A4731');
+            if (metaThemeColor) metaThemeColor.setAttribute('content', '#0f2b1d');
+        }
+      }
+
       document.addEventListener('DOMContentLoaded', () => {
-        const nameElement = document.getElementById('name-text');
         const params = new URLSearchParams(window.location.search);
+        
+        // --- Tema Rengi Kontrolü ---
+        // 'ztxy' parametresi varsa Kırmızı, yoksa Yeşil
+        if (params.has('ztxy')) {
+            applyTheme(true);
+        } else {
+            applyTheme(false);
+        }
+
+        // --- İsim Kontrolü ---
+        const nameElement = document.getElementById('name-text');
         const encodedName = params.get('ad');
 
         if (encodedName) {
@@ -361,6 +398,7 @@
              fitTextToContainer(nameElement);
         });
 
+        // --- Kar Efekti ---
         const snowContainer = document.getElementById('snowfall-container');
         const flakeCount = 50; 
 
