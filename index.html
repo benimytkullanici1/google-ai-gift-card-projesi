@@ -11,10 +11,10 @@
 
     <style>
       :root {
-        /* Tüm arka plan aynı yeşil */
-        --color-bg: #1A4731; 
-        --color-gold: #D4AF37;
-        --color-text-white: #F2F2F2;
+        --color-bg-dark: #0f2b1d;
+        --color-bg-light: #1A4731;
+        --color-gold-start: #F2D06B;
+        --color-gold-end: #B38728;
       }
 
       html, body {
@@ -22,9 +22,10 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        background-color: var(--color-bg);
-        font-family: 'Great Vibes', cursive; /* Kaligrafik Font */
-        overflow: hidden; /* Scroll engelleme */
+        /* Vignette Efekti */
+        background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+        font-family: 'Great Vibes', cursive;
+        overflow: hidden;
         -webkit-font-smoothing: antialiased;
       }
 
@@ -35,73 +36,97 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* Dikey ortalama */
+        justify-content: center;
         position: relative;
+        z-index: 10;
       }
 
       .card-content {
         position: relative;
         width: 100%;
         height: 100%;
-        max-width: 600px; /* Tablet/PC'de çok yayılmasın */
+        /* Masaüstünde mobil hissi vermek için genişliği kısıtlıyoruz */
+        max-width: 450px; 
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* İçerik dikeyde ortalı */
+        justify-content: center;
         z-index: 2;
-        padding: 1rem;
+        padding: 2rem; 
         box-sizing: border-box;
       }
 
-      /* Texture Overlay */
-      .texture-overlay {
-        position: absolute;
-        inset: 0;
-        background-color: white;
-        opacity: 0.03;
-        pointer-events: none;
-        z-index: 0;
-        mix-blend-mode: overlay;
-      }
-
-      /* Typography */
+      /* Typography - Altın Efektli */
       .text-section {
         text-align: center;
-        margin-bottom: 2vh; /* Esnek boşluk */
+        margin-bottom: 2vh;
         z-index: 20;
+        position: relative;
+        width: 100%;
+        /* Yazıyı biraz daha aşağı alıyoruz */
+        margin-top: 50px; 
+      }
+
+      .gold-text {
+        font-family: 'Great Vibes', cursive;
+        color: var(--color-gold-start); /* Yedek renk */
+        
+        /* Altın Gradient */
+        background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 5s linear infinite;
+        
+        /* Kesilmeyi önlemek için kritik ayarlar */
+        line-height: 1.4; 
+        /* Sağdan soldan daha fazla pay bırakarak harflerin kesilmesini engelliyoruz */
+        padding: 0.2em 0.6em; 
+        display: inline-block; 
+        
+        /* Shadow */
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+      }
+
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
       }
 
       .greeting-title {
-        font-family: 'Great Vibes', cursive;
-        font-size: 3.5rem; /* Kaligrafik fontlar biraz daha büyük olmalı */
-        line-height: 1.1;
-        color: var(--color-gold);
-        font-weight: 400;
-        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        font-size: 4.5rem;
         margin: 0;
-        padding: 0;
+        /* Taşmayı önlemek için genişliği sınırla */
+        max-width: 100%; 
+        white-space: nowrap; /* Tek satırda kalmaya zorla */
       }
 
       .name-text {
-        font-family: 'Great Vibes', cursive;
-        font-size: 3rem;
-        color: var(--color-gold); /* İsim de altın rengi istendi */
-        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        margin-top: 0.5rem;
-        min-height: 3.5rem;
+        font-size: 4rem;
+        margin-top: 0.2rem;
+        min-height: 4.5rem;
         display: block;
       }
 
-      /* Mobil için font ayarı */
-      @media (max-width: 480px) {
-        .greeting-title { font-size: 3rem; }
-        .name-text { font-size: 2.5rem; }
+      /* Mobil Ayarları */
+      @media (max-width: 600px) {
+        .greeting-title { 
+            font-size: 3.5rem; 
+            white-space: normal; /* Mobilde gerekirse alt satıra geçsin */
+            line-height: 1.2;
+        }
+        .name-text { font-size: 3rem; }
+        .card-content { padding: 1.5rem; max-width: 100%; }
+        
+        /* Mobilde köşe süslerini biraz küçült */
+        .corner-decoration { width: 60px !important; height: 60px !important; }
       }
 
       /* Image Section */
       .image-container {
         width: 100%;
-        flex: 1; /* Kalan boşluğu kapla ama taşma */
+        flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -109,7 +134,8 @@
         z-index: 10;
         overflow: hidden;
         margin-bottom: 2vh;
-        max-height: 60vh; /* Görsel ekranın %60'ından fazla yer kaplamasın */
+        max-height: 50vh;
+        padding: 10px;
       }
 
       .main-image {
@@ -117,11 +143,17 @@
         max-height: 100%;
         width: auto;
         height: auto;
-        object-fit: contain; /* Resmi kesmeden sığdır */
-        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
-        /* Resim yüklenmezse alt text görünsün diye */
-        color: var(--color-gold); 
-        font-size: 1.2rem;
+        object-fit: contain;
+        
+        /* Resim Çerçevesi ve Gölge */
+        border: 2px solid rgba(242, 208, 107, 0.4);
+        border-radius: 4px;
+        box-shadow: 
+          0 0 20px rgba(242, 208, 107, 0.15),
+          0 20px 50px rgba(0, 0, 0, 0.7);
+        
+        /* Resim yüklenmezse text rengi */
+        color: var(--color-gold-start); 
       }
 
       /* Snowfall Animation */
@@ -136,36 +168,104 @@
         position: absolute;
         background-color: white;
         border-radius: 50%;
-        filter: blur(0.8px);
+        filter: blur(1px);
         top: -20px;
+        opacity: 0.8;
       }
 
       @keyframes fall {
-        0% { transform: translateY(-20px) translateX(0px); opacity: 0; }
-        10% { opacity: 0.8; }
-        100% { transform: translateY(110vh) translateX(20px); opacity: 0.2; }
+        0% { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.9; }
+        100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0.2; }
       }
+
+      /* Ornamental Corners - Simplified & Elegant */
+      .corner-decoration {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        pointer-events: none;
+        z-index: 5;
+        opacity: 0.9;
+        /* Gölge ekleyerek derinlik katalım */
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+      }
+
+      /* Viewport köşelerine sabitliyoruz */
+      .top-left { top: 0; left: 0; }
+      .top-right { top: 0; right: 0; transform: scaleX(-1); }
+      .bottom-left { bottom: 0; left: 0; transform: scaleY(-1); }
+      .bottom-right { bottom: 0; right: 0; transform: scale(-1); }
+
     </style>
   </head>
   <body>
 
-    <!-- Texture/Noise Overlay -->
-    <div class="texture-overlay"></div>
-    
+    <!-- SVG Definitions -->
+    <svg width="0" height="0">
+      <defs>
+        <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F2D06B" />
+          <stop offset="40%" stop-color="#B38728" />
+          <stop offset="60%" stop-color="#F2D06B" />
+          <stop offset="100%" stop-color="#B38728" />
+        </linearGradient>
+      </defs>
+    </svg>
+
     <!-- Snowfall Effect -->
     <div id="snowfall-container" class="snowfall-container"></div>
 
     <div class="app-container">
+        
+        <!-- 
+           KÖŞE SÜSLERİ 
+           Tekrar app-container altına (en dışa) taşındı.
+           Böylece ekranın (viewport) en köşelerinde duracaklar.
+        -->
+        
+        <!-- Top Left -->
+        <svg class="corner-decoration top-left" viewBox="0 0 100 100">
+          <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+          <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+          <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+          <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+        </svg>
+
+        <!-- Top Right -->
+        <svg class="corner-decoration top-right" viewBox="0 0 100 100">
+          <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+          <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+          <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+          <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+        </svg>
+
+        <!-- Bottom Left -->
+        <svg class="corner-decoration bottom-left" viewBox="0 0 100 100">
+          <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+          <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+          <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+          <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+        </svg>
+
+        <!-- Bottom Right -->
+        <svg class="corner-decoration bottom-right" viewBox="0 0 100 100">
+          <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+          <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+          <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+          <circle cx="5" cy="5" r="3" fill="#0f2b1d" />
+        </svg>
+
       <div class="card-content">
         
         <!-- TOP CONTENT: GREETING & NAME -->
         <div class="text-section">
-          <h1 class="greeting-title">
+          <h1 class="greeting-title gold-text">
             Merry Christmas
           </h1>
 
           <!-- Dynamic Name -->
-          <h2 id="name-text" class="name-text">
+          <h2 id="name-text" class="name-text gold-text">
             Loading...
           </h2>
         </div>
@@ -174,13 +274,13 @@
         <div class="image-container">
            <!-- 
               ÖNEMLİ:
-              1. Dosya adı tam olarak "yilbasi_gorseli.png" olmalı (küçük harflerle).
-              2. Dosya index.html ile AYNI klasörde olmalı.
+              Dosya adı: yilbasi_gorseli.png
+              Konum: index.html ile aynı klasör
            -->
            <img 
               id="main-image"
               src="./yilbasi_gorseli.png" 
-              alt="Görsel Yüklenemedi." 
+              alt="" 
               class="main-image"
            />
         </div>
@@ -198,13 +298,17 @@
         if (encodedName) {
           try {
             // Base64 decode
-            const decodedName = atob(encodedName);
-            // Türkçe karakterler için decode trick:
-            // const utf8Name = decodeURIComponent(escape(window.atob(encodedName)));
+            // Türkçe karakter desteği için decodeURIComponent ve escape kullanımı
+            const decodedName = decodeURIComponent(escape(window.atob(encodedName)));
             nameElement.textContent = decodedName;
           } catch (e) {
-            console.error("İsim çözülemedi:", e);
-            nameElement.textContent = '';
+            // Standart atob fallback
+            try {
+                 nameElement.textContent = atob(encodedName);
+            } catch (err) {
+                 console.error("İsim çözülemedi:", err);
+                 nameElement.textContent = '';
+            }
           }
         } else {
           nameElement.textContent = ''; 
@@ -219,10 +323,10 @@
           flake.classList.add('snowflake');
           
           const left = Math.random() * 100; // %
-          const duration = 10 + Math.random() * 15; // s
-          const opacity = 0.3 + Math.random() * 0.7;
-          const size = 3 + Math.random() * 5; // px
-          const delay = Math.random() * 15; // s
+          const duration = 10 + Math.random() * 10; // s
+          const opacity = 0.2 + Math.random() * 0.5;
+          const size = 3 + Math.random() * 4; // px
+          const delay = Math.random() * 10; // s
 
           flake.style.left = left + '%';
           flake.style.width = size + 'px';
