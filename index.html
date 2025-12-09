@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     
     <!-- Mobil Tarayıcı Renk Uyumu (Safari/Chrome) -->
-    <meta name="theme-color" content="#0f2b1d" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- 'black-translucent' içeriği barın altına iter, 'default' veya hex kodu barı boyar -->
+    <meta name="theme-color" content="#1A4731" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
     
     <title>Merry Christmas</title>
     
@@ -27,7 +29,8 @@
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 100%;
+        height: 100%; /* Fallback */
+        height: 100dvh; /* Dynamic viewport height for mobile browsers */
         /* Vignette Efekti */
         background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
         font-family: 'Dancing Script', cursive;
@@ -45,6 +48,12 @@
         justify-content: center;
         position: relative;
         z-index: 10;
+        /* Safe Area Padding for notch devices */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        box-sizing: border-box;
       }
 
       .card-content {
@@ -71,6 +80,9 @@
         width: 100%;
         /* Yazıyı biraz daha aşağı alıyoruz */
         margin-top: 50px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .gold-text {
@@ -104,9 +116,8 @@
       .greeting-title {
         font-size: 4.5rem;
         margin: 0;
-        /* Taşmayı önlemek için genişliği sınırla */
         max-width: 100%; 
-        white-space: nowrap; /* Tek satırda kalmaya zorla */
+        white-space: nowrap; 
       }
 
       .name-text {
@@ -114,6 +125,10 @@
         margin-top: 0.2rem;
         min-height: 4.5rem;
         display: block;
+        max-width: 100%;
+        /* Uzun isimlerin taşmaması için */
+        white-space: nowrap;
+        overflow: visible; 
       }
 
       /* Mobil Ayarları */
@@ -123,7 +138,16 @@
             white-space: normal; /* Mobilde gerekirse alt satıra geçsin */
             line-height: 1.2;
         }
-        .name-text { font-size: 3rem; }
+        
+        /* MOBİLDE İSİM BEYAZ OLSUN */
+        .name-text { 
+            font-size: 3rem;
+            color: white !important;
+            background: none !important; /* Gradienti kaldır */
+            -webkit-text-fill-color: white !important;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); /* Okunabilirlik için gölge */
+        }
+        
         .card-content { padding: 1.5rem; max-width: 100%; }
         
         /* Mobilde köşe süslerini biraz küçült */
@@ -190,15 +214,39 @@
         pointer-events: none;
         z-index: 5;
         opacity: 0.9;
-        /* Gölge ekleyerek derinlik katalım */
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
       }
 
-      /* Viewport köşelerine sabitliyoruz */
-      .top-left { top: 0; left: 0; }
-      .top-right { top: 0; right: 0; transform: scaleX(-1); }
-      .bottom-left { bottom: 0; left: 0; transform: scaleY(-1); }
-      .bottom-right { bottom: 0; right: 0; transform: scale(-1); }
+      /* Viewport köşelerine sabitliyoruz - Safe Area dikkate alınarak */
+      .top-left { 
+          top: 0; 
+          left: 0; 
+          margin-top: env(safe-area-inset-top);
+          margin-left: env(safe-area-inset-left);
+      }
+      .top-right { 
+          top: 0; 
+          right: 0; 
+          transform: scaleX(-1); 
+          margin-top: env(safe-area-inset-top);
+          margin-right: env(safe-area-inset-right);
+      }
+      .bottom-left { 
+          bottom: 0; 
+          left: 0; 
+          transform: scaleY(-1); 
+          /* Browser barının altında kalmaması için safe area + extra margin */
+          margin-bottom: max(10px, env(safe-area-inset-bottom));
+          margin-left: env(safe-area-inset-left);
+      }
+      .bottom-right { 
+          bottom: 0; 
+          right: 0; 
+          transform: scale(-1); 
+          /* Browser barının altında kalmaması için safe area + extra margin */
+          margin-bottom: max(10px, env(safe-area-inset-bottom));
+          margin-right: env(safe-area-inset-right);
+      }
 
     </style>
   </head>
@@ -291,7 +339,27 @@
     </div>
 
     <script>
-      // 1. DYNAMIC NAME LOGIC
+      // Function to auto-scale text to fit container
+      function fitTextToContainer(element) {
+        if (!element || !element.textContent) return;
+        
+        // Reset to initial size (or max desired size)
+        // Desktop base is 4rem (64px), Mobile is 3rem (48px)
+        let isMobile = window.innerWidth <= 600;
+        let fontSize = isMobile ? 48 : 64; 
+        element.style.fontSize = fontSize + 'px';
+        
+        const parentWidth = element.parentElement.clientWidth;
+        // Safety margin
+        const maxWidth = parentWidth * 0.95; 
+
+        // Shrink until it fits
+        while (element.scrollWidth > maxWidth && fontSize > 12) {
+            fontSize--;
+            element.style.fontSize = fontSize + 'px';
+        }
+      }
+
       document.addEventListener('DOMContentLoaded', () => {
         const nameElement = document.getElementById('name-text');
         const params = new URLSearchParams(window.location.search);
@@ -300,13 +368,16 @@
         if (encodedName) {
           try {
             // Base64 decode
-            // Türkçe karakter desteği için decodeURIComponent ve escape kullanımı
             const decodedName = decodeURIComponent(escape(window.atob(encodedName)));
             nameElement.textContent = decodedName;
+            
+            // Auto fit text after setting content
+            requestAnimationFrame(() => fitTextToContainer(nameElement));
+            
           } catch (e) {
-            // Standart atob fallback
             try {
                  nameElement.textContent = atob(encodedName);
+                 requestAnimationFrame(() => fitTextToContainer(nameElement));
             } catch (err) {
                  console.error("İsim çözülemedi:", err);
                  nameElement.textContent = '';
@@ -315,8 +386,13 @@
         } else {
           nameElement.textContent = ''; 
         }
+        
+        // Re-calculate on resize
+        window.addEventListener('resize', () => {
+             fitTextToContainer(nameElement);
+        });
 
-        // 2. SNOWFALL ANIMATION LOGIC
+        // SNOWFALL ANIMATION LOGIC
         const snowContainer = document.getElementById('snowfall-container');
         const flakeCount = 50; 
 
