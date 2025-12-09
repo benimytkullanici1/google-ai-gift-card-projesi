@@ -1,4 +1,4 @@
-<!-- UPDATE CHECKPOINT: v5.0 - Obfuscated Theme Trigger -->
+<!-- UPDATE CHECKPOINT: v6.0 - Smart Text Resize Logic - 2024-01-01T12:00:00Z -->
 <!DOCTYPE html>
 <html lang="tr">
   <head>
@@ -129,9 +129,9 @@
         font-size: 4rem;
         margin-top: 0.2rem;
         min-height: 4.5rem;
-        display: block;
+        display: inline-block; /* Inline-block genişlik ölçümü için önemli */
         max-width: 100%;
-        white-space: nowrap;
+        white-space: nowrap; /* JS ile yönetilecek */
         overflow: visible; 
       }
 
@@ -329,18 +329,44 @@
 
     <script>
       function fitTextToContainer(element) {
-        if (!element || !element.textContent) return;
+        // Metin yoksa çık
+        if (!element || !element.dataset.text) return;
+        
+        const originalText = element.dataset.text;
+        const parentWidth = element.parentElement.clientWidth;
+        const maxWidth = parentWidth * 0.90; // Kenarlardan %10 pay bırak
         
         let isMobile = window.innerWidth <= 600;
-        let fontSize = isMobile ? 48 : 64; 
-        element.style.fontSize = fontSize + 'px';
+        let startFontSize = isMobile ? 48 : 64; 
         
-        const parentWidth = element.parentElement.clientWidth;
-        const maxWidth = parentWidth * 0.95; 
+        // 1. AŞAMA: Önce tek satır deniyoruz (Reset)
+        let currentFontSize = startFontSize;
+        element.style.fontSize = currentFontSize + 'px';
+        element.style.whiteSpace = 'nowrap'; // Zorla tek satır yap
+        element.innerHTML = originalText; // Temiz metni koy
+        
+        // Eğer tek satırda sığıyorsa işlem tamam
+        if (element.scrollWidth <= maxWidth) {
+            return;
+        }
 
-        while (element.scrollWidth > maxWidth && fontSize > 12) {
-            fontSize--;
-            element.style.fontSize = fontSize + 'px';
+        // 2. AŞAMA: Sığmadı, isimde boşluk var mı? Varsa böl.
+        // Yoksa (tek kelimeyse) tek satır modunda kalıp küçültülecek.
+        if (originalText.includes(' ')) {
+            // Boşlukları <br> ile değiştir
+            element.innerHTML = originalText.split(' ').join('<br>');
+            // Artık tek satır zorlamasını kaldırıyoruz ki <br> çalışsın
+            // Ancak her satır kendi içinde bütün kalsın diye yine de dikkatli olmalıyız.
+            // inline-block ve br kullanımı genelde yeterlidir.
+        }
+
+        // 3. AŞAMA: Döngü ile küçültme
+        // İster tek satır olsun ister bölünmüş olsun, en geniş yer (scrollWidth)
+        // max genişlikten büyük olduğu sürece fontu küçült.
+        // Bu işlem tüm container'a uygulandığı için fontlar eşit kalır.
+        while (element.scrollWidth > maxWidth && currentFontSize > 12) {
+            currentFontSize--;
+            element.style.fontSize = currentFontSize + 'px';
         }
       }
 
@@ -365,7 +391,6 @@
         const params = new URLSearchParams(window.location.search);
         
         // --- Tema Rengi Kontrolü ---
-        // 'ztxy' parametresi varsa Kırmızı, yoksa Yeşil
         if (params.has('ztxy')) {
             applyTheme(true);
         } else {
@@ -380,10 +405,16 @@
           try {
             const decodedName = decodeURIComponent(escape(window.atob(encodedName)));
             nameElement.textContent = decodedName;
+            // Orijinal ismi kaydet, resize fonksiyonu bunu kullanacak
+            nameElement.dataset.text = decodedName; 
+            
+            // Font hesaplamasını render sonrasına bırak
             requestAnimationFrame(() => fitTextToContainer(nameElement));
           } catch (e) {
             try {
-                 nameElement.textContent = atob(encodedName);
+                 const simpleDecoded = atob(encodedName);
+                 nameElement.textContent = simpleDecoded;
+                 nameElement.dataset.text = simpleDecoded;
                  requestAnimationFrame(() => fitTextToContainer(nameElement));
             } catch (err) {
                  console.error("İsim çözülemedi:", err);
@@ -394,6 +425,7 @@
           nameElement.textContent = ''; 
         }
         
+        // Ekran döndüğünde veya boyutu değiştiğinde yeniden hesapla
         window.addEventListener('resize', () => {
              fitTextToContainer(nameElement);
         });
