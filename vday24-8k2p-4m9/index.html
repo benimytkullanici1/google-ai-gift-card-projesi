@@ -1,32 +1,31 @@
-<!-- UPDATE CHECKPOINT: v8.4 - Image Fallback Added -->
+<!-- UPDATE CHECKPOINT: v9.0 - Valentines Day Edition -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Hidden Page: Prevents search engines from indexing this specific card -->
+    <!-- Hidden Page -->
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Social Media Sharing Meta Tags (Open Graph) -->
-    <meta property="og:title" content="Happy Holidays! 🎄">
-    <meta property="og:description" content="Click to view your personalized greeting card.">
+    <!-- Social Media Sharing Meta Tags -->
+    <meta property="og:title" content="Happy Valentine's Day! ❤️">
+    <meta property="og:description" content="A special card for a special person.">
     <meta property="og:type" content="website">
     
-    <!-- viewport-fit=cover: Ensures full screen usage -->
+    <!-- viewport-fit=cover -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     
-    <!-- Mobile Browser Theme Color -->
-    <meta id="theme-color-meta" name="theme-color" content="#0f2b1d" />
+    <!-- Mobile Browser Theme Color (Red) -->
+    <meta id="theme-color-meta" name="theme-color" content="#2b0a0a" />
     
     <!-- iOS Legacy -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- Modern Standard -->
     <meta name="mobile-web-app-capable" content="yes">
     
-    <!-- Manifest for Orientation Lock (Base64 Encoded - English: Holiday Card) -->
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSG9saWRheSBDYXJkIiwic2hvcnRfbmFtZSI6IkdpZnQiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjMGYyYjFkIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjJiMWQifQ==" />
+    <!-- Manifest (Generic Gift) -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmFsZW50aW5lIENhcmQiLCJzaG9ydF9uYW1lIjoiTG92ZSIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQiLCJ0aGVtZV9jb2xvciI6IiMyYjBhMGEiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzJiMGEwYSJ9" />
     
-    <title>Merry Christmas</title>
+    <title>Happy Valentine's Day</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,9 +33,9 @@
 
     <style>
       :root {
-        /* Default Colors (Green Theme) */
-        --color-bg-dark: #0f2b1d;
-        --color-bg-light: #1A4731;
+        /* Red Theme Defaults */
+        --color-bg-dark: #2b0a0a;  /* Dark Burgundy */
+        --color-bg-light: #591414; /* Deep Red */
         
         --color-gold-start: #F2D06B;
         --color-gold-end: #B38728;
@@ -52,8 +51,8 @@
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 100%; /* Fallback */
-        height: 100dvh; /* Dynamic viewport height */
+        height: 100%;
+        height: 100dvh;
         background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
         font-family: 'Dancing Script', cursive;
         overflow: hidden; 
@@ -115,7 +114,7 @@
         color: var(--color-gold-start);
         font-weight: 700;
         
-        /* Desktop Gold Effect */
+        /* Gold Gradient Effect */
         background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B);
         background-size: 200% auto;
         -webkit-background-clip: text;
@@ -189,15 +188,15 @@
         filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
       }
       
-      /* Fallback Icon Style */
+      /* Fallback Icon (Heart) */
       .fallback-icon {
-        display: none; /* Hidden by default */
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 100%;
         height: 100%;
-        animation: float 3s ease-in-out infinite;
+        animation: pulse 2s ease-in-out infinite;
       }
       
       .fallback-icon svg {
@@ -205,33 +204,41 @@
         filter: drop-shadow(0 0 10px rgba(242, 208, 107, 0.5));
       }
 
-      @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
       }
 
-      /* Snowfall Animation */
-      .snowfall-container {
+      /* --- Heart Animation (Floating Up) --- */
+      .hearts-container {
         position: absolute;
         inset: 0;
         pointer-events: none;
         overflow: hidden;
         z-index: 1;
       }
-      .snowflake {
+      
+      .heart {
         position: absolute;
-        background-color: white;
-        border-radius: 50%;
-        filter: blur(1px);
-        top: -20px;
-        opacity: 0.8;
+        color: rgba(255, 255, 255, 0.7); /* Whitish transparent */
+        bottom: -50px; /* Start below screen */
+        font-size: 20px;
+        user-select: none;
       }
 
-      @keyframes fall {
-        0% { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.9; }
-        100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0.2; }
+      @keyframes floatUp {
+        0% {
+            transform: translateY(0) scale(0.5) rotate(0deg);
+            opacity: 0;
+        }
+        20% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(-120vh) scale(1.2) rotate(360deg);
+            opacity: 0;
+        }
       }
 
       /* Ornamental Corners - FIXED POSITIONING */
@@ -260,10 +267,9 @@
           top: 0; 
           right: 0; 
           transform: scaleX(-1); 
-          margin-top: env(safe-area-inset-top);
+          margin-top: env(safe-area-inset-top); 
           margin-right: env(safe-area-inset-right);
       }
-      
       .bottom-left { 
           bottom: 0;
           left: 0; 
@@ -344,8 +350,8 @@
         <h2 style="font-family: sans-serif; font-size: 1.5rem; margin: 0 20px;">Please Rotate Your Device</h2>
     </div>
 
-    <!-- Snowfall Effect -->
-    <div id="snowfall-container" class="snowfall-container"></div>
+    <!-- Heart Animation Container -->
+    <div id="hearts-container" class="hearts-container"></div>
 
     <!-- Corners -->
     <svg class="corner-decoration top-left" viewBox="0 0 100 100">
@@ -381,7 +387,7 @@
         
         <div class="text-section">
           <h1 class="greeting-title gold-text">
-            Merry Christmas
+            Happy Valentine's Day
           </h1>
 
           <h2 id="name-text" class="name-text gold-text">
@@ -390,18 +396,18 @@
         </div>
 
         <div class="image-container">
-           <!-- Fallback Icon if image fails -->
+           <!-- Fallback Icon (Heart) -->
            <div id="fallback-icon" class="fallback-icon">
               <svg viewBox="0 0 24 24" width="150" height="150">
-                  <path d="M20 12v10H4V12h16zm-9-6c1.1 0 2 .9 2 2h2c0-2.21-1.79-4-4-4s-4 1.79-4 4h2c0-1.1.9-2 2-2zm-3.13 4l-1.8 2h9.86l-1.8-2H7.87zM22 10h-4c0-3.31-2.69-6-6-6s-6 2.69-6 6H2v2h20v-2z"/>
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
            </div>
 
-           <!-- Added error handling to show fallback -->
+           <!-- Valentine Image -->
            <img 
               id="main-image"
-              src="./yilbasi_gorseli.png" 
-              alt="Holiday Card" 
+              src="./valentine_gorseli.png" 
+              alt="Valentine Card" 
               class="main-image"
               onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"
            />
@@ -443,33 +449,9 @@
         }
       }
 
-      function applyTheme(isRed) {
-        const root = document.documentElement;
-        const metaThemeColor = document.getElementById('theme-color-meta');
-        
-        if (isRed) {
-            // Dark Red Theme
-            root.style.setProperty('--color-bg-dark', '#2b0a0a');
-            root.style.setProperty('--color-bg-light', '#591414');
-            if (metaThemeColor) metaThemeColor.setAttribute('content', '#2b0a0a');
-        } else {
-            // Default Green Theme
-            root.style.setProperty('--color-bg-dark', '#0f2b1d');
-            root.style.setProperty('--color-bg-light', '#1A4731');
-            if (metaThemeColor) metaThemeColor.setAttribute('content', '#0f2b1d');
-        }
-      }
-
       document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         
-        // --- Theme Control ---
-        if (params.has('ztxy')) {
-            applyTheme(true);
-        } else {
-            applyTheme(false);
-        }
-
         // --- Name Control ---
         const nameElement = document.getElementById('name-text');
         const encodedName = params.get('ad');
@@ -500,31 +482,29 @@
              fitTextToContainer(nameElement);
         });
 
-        // --- Snow Effect ---
-        const snowContainer = document.getElementById('snowfall-container');
-        const flakeCount = 50; 
+        // --- Heart Animation ---
+        const heartsContainer = document.getElementById('hearts-container');
+        const heartCount = 30; // Number of floating hearts
 
-        for (let i = 0; i < flakeCount; i++) {
-          const flake = document.createElement('div');
-          flake.classList.add('snowflake');
+        for (let i = 0; i < heartCount; i++) {
+          const heart = document.createElement('div');
+          heart.classList.add('heart');
+          heart.innerHTML = '&#x2764;'; // Unicode Heart Symbol
           
-          const left = Math.random() * 100;
-          const duration = 10 + Math.random() * 10;
-          const opacity = 0.2 + Math.random() * 0.5;
-          const size = 3 + Math.random() * 4;
-          const delay = Math.random() * 10;
+          const left = Math.random() * 100; // Random horizontal pos
+          const duration = 5 + Math.random() * 10; // 5s to 15s float duration
+          const size = 15 + Math.random() * 25; // Random size
+          const delay = Math.random() * 15; // Random start delay
 
-          flake.style.left = left + '%';
-          flake.style.width = size + 'px';
-          flake.style.height = size + 'px';
-          flake.style.opacity = opacity;
-          flake.style.animationName = 'fall';
-          flake.style.animationDuration = duration + 's';
-          flake.style.animationTimingFunction = 'linear';
-          flake.style.animationIterationCount = 'infinite';
-          flake.style.animationDelay = '-' + delay + 's';
+          heart.style.left = left + '%';
+          heart.style.fontSize = size + 'px';
+          heart.style.animationName = 'floatUp';
+          heart.style.animationDuration = duration + 's';
+          heart.style.animationTimingFunction = 'linear';
+          heart.style.animationIterationCount = 'infinite';
+          heart.style.animationDelay = '-' + delay + 's';
 
-          snowContainer.appendChild(flake);
+          heartsContainer.appendChild(heart);
         }
       });
     </script>
