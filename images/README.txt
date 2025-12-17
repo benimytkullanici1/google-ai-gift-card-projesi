@@ -7,5 +7,6 @@ Lütfen aşağıdaki resim dosyalarını bu klasörün (images) içine yükleyin
 5. annelergunu_gorseli.png  (Anneler günü kartı için)
 6. leaf_gorseli.png         (Anneler günü yaprak animasyonu için)
 7. dogumgunu_gorseli.png    (Doğum günü kartı için)
+8. balon_gorseli.png        (Doğum günü balon animasyonu için)
 
 Bu klasör, tüm kartların ortak resim havuzudur.
