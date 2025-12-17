@@ -1,4 +1,4 @@
-<!-- UPDATE CHECKPOINT: v1.1 - Mother's Day - Image Leaves & Rose Theme -->
+<!-- UPDATE CHECKPOINT: v1.2 - Mother's Day - Smaller Leaves -->
 <!DOCTYPE html>
 <html lang="tr">
   <head>
@@ -517,7 +517,10 @@
           const left = Math.random() * 100; // Random horizontal pos
           const duration = 10 + Math.random() * 8; // Fall duration
           const swayDuration = 3 + Math.random() * 3; // Gondola swing duration
-          const size = 30 + Math.random() * 40; // Size variation
+          
+          // Reduced Size (Previously 30-70, now 15-35)
+          const size = 15 + Math.random() * 20; 
+          
           const delay = Math.random() * 10; 
 
           leafWrapper.style.left = left + '%';
