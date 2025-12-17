@@ -1,0 +1,441 @@
+<!-- UPDATE CHECKPOINT: v10.0 - Halloween Edition -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Hidden Page -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Social Media Sharing Meta Tags -->
+    <meta property="og:title" content="Happy Halloween! 🎃">
+    <meta property="og:description" content="Trick or Treat? A special card for you.">
+    <meta property="og:type" content="website">
+    
+    <!-- viewport-fit=cover -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    
+    <!-- Mobile Browser Theme Color (Dark Purple) -->
+    <meta id="theme-color-meta" name="theme-color" content="#1a0b2e" />
+    
+    <!-- iOS Legacy -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Manifest (Pumpkin Icon Base64) -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSGFsbG93ZWVuIENhcmQiLCJzaG9ydF9uYW1lIjoiU3Bvb2t5Iiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCIsInRoZW1lX2NvbG9yIjoiIzFhMGIyZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWEwYjJlIn0=" />
+    
+    <title>Happy Halloween</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+      :root {
+        /* Halloween Theme Defaults */
+        --color-bg-dark: #0d0417;  /* Almost Black */
+        --color-bg-light: #2e1a47; /* Deep Purple */
+        
+        --color-text-start: #ff9a00; /* Pumpkin Orange */
+        --color-text-end: #ff5e00;   /* Darker Orange */
+      }
+
+      html {
+        background-color: var(--color-bg-dark);
+        height: 100%;
+        transition: background-color 0.5s ease;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+        background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+        font-family: 'Dancing Script', cursive;
+        overflow: hidden; 
+        -webkit-font-smoothing: antialiased;
+        position: fixed; 
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        transition: background 0.5s ease;
+      }
+
+      /* Layout */
+      .app-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        box-sizing: border-box;
+      }
+
+      .card-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-width: 450px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        padding: 1rem; 
+        box-sizing: border-box;
+      }
+
+      /* Typography */
+      .text-section {
+        text-align: center;
+        margin-bottom: 2vh;
+        z-index: 20;
+        position: relative;
+        width: 100%;
+        margin-top: 50px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .spooky-text {
+        font-family: 'Dancing Script', cursive;
+        color: var(--color-text-start);
+        font-weight: 700;
+        
+        /* Orange Glow Effect */
+        background: linear-gradient(to right, #ff9a00, #ffc800, #ff5e00, #ffc800, #ff9a00);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 5s linear infinite;
+        
+        line-height: 1.4; 
+        padding: 0.2em 0.6em; 
+        display: inline-block; 
+        filter: drop-shadow(0 2px 8px rgba(255, 100, 0, 0.4));
+      }
+
+      @keyframes shine {
+        to { background-position: 200% center; }
+      }
+
+      .greeting-title {
+        font-size: 4.5rem;
+        margin: 0;
+        white-space: nowrap; 
+      }
+
+      .name-text {
+        font-size: 4rem;
+        margin-top: 0.2rem;
+        min-height: 4.5rem;
+        display: inline-block; 
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: visible; 
+      }
+
+      /* Mobile Settings */
+      @media (max-width: 600px) {
+        .greeting-title { 
+            font-size: 3.5rem; 
+            white-space: normal; 
+            line-height: 1.2;
+        }
+        
+        .name-text { 
+            font-size: 3rem;
+        }
+        
+        .card-content { padding: 1rem; }
+      }
+
+      /* Image Section */
+      .image-container {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        overflow: hidden;
+        margin-bottom: 2vh;
+        max-height: 55vh;
+        padding: 0;
+      }
+
+      .main-image {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+      }
+      
+      /* Fallback Icon (Pumpkin) */
+      .fallback-icon {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        animation: float 3s ease-in-out infinite;
+      }
+      
+      .fallback-icon svg {
+        fill: #ff9a00;
+        filter: drop-shadow(0 0 15px rgba(255, 154, 0, 0.6));
+      }
+
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+
+      /* --- Bat Animation --- */
+      .bats-container {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 1;
+      }
+      
+      .bat {
+        position: absolute;
+        opacity: 0.7;
+        width: 50px; /* Base size, will be randomized */
+        height: auto;
+      }
+
+      /* Bats flying left to right with a wavy motion */
+      @keyframes flyRight {
+        0% { 
+            left: -150px; 
+            transform: translateY(0) rotate(10deg); 
+        }
+        25% { transform: translateY(-30px) rotate(-10deg); }
+        50% { transform: translateY(0) rotate(10deg); }
+        75% { transform: translateY(30px) rotate(-10deg); }
+        100% { 
+            left: 110%; 
+            transform: translateY(0) rotate(10deg); 
+        }
+      }
+
+      /* --- Orientation Lock Overlay (Mobile) --- */
+      #rotate-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-bg-dark);
+        z-index: 10000;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text-start);
+        text-align: center;
+        transition: background-color 0.5s ease;
+      }
+      
+      #rotate-overlay svg {
+        width: 80px;
+        height: 80px;
+        fill: var(--color-text-start);
+        margin-bottom: 20px;
+        animation: rotate-phone 2s infinite ease-in-out;
+      }
+
+      @keyframes rotate-phone {
+        0%, 10% { transform: rotate(90deg); }
+        50%, 60% { transform: rotate(0deg); }
+        100% { transform: rotate(90deg); }
+      }
+
+      @media screen and (max-height: 550px) and (orientation: landscape) {
+        #rotate-overlay {
+            display: flex;
+        }
+        .app-container {
+            visibility: hidden;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <!-- Rotate Device Overlay -->
+    <div id="rotate-overlay">
+        <svg viewBox="0 0 24 24">
+            <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+        </svg>
+        <h2 style="font-family: sans-serif; font-size: 1.5rem; margin: 0 20px;">Please Rotate Your Device</h2>
+    </div>
+
+    <!-- Bats Animation Container -->
+    <div id="bats-container" class="bats-container"></div>
+
+    <!-- Note: Corner decorations removed as requested -->
+
+    <div class="app-container">
+      <div class="card-content">
+        
+        <div class="text-section">
+          <h1 class="greeting-title spooky-text">
+            Happy Halloween
+          </h1>
+
+          <h2 id="name-text" class="name-text spooky-text">
+            Loading...
+          </h2>
+        </div>
+
+        <div class="image-container">
+           <!-- Fallback Icon (Pumpkin) -->
+           <div id="fallback-icon" class="fallback-icon">
+              <svg viewBox="0 0 24 24" width="150" height="150">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 2.07c3.07.38 5.57 2.52 6.54 5.36L13 9.5V4.07zM4.26 14C4.1 13.36 4 12.69 4 12c0-1.85.66-3.55 1.76-4.9l5.24 5.24V19c-3.72-1.21-6.42-4.52-6.74-8.5v3.5zM12 19v-6.66l5.34-5.34C18.23 8.32 19 9.99 19 12c0 4.42-3.58 8-8 8v-1z"/>
+                  <path d="M7 12c0 2.5 2 4.5 5 4.5s5-2 5-4.5-2-1.5-5-1.5-5 1.5-5 1.5z"/>
+              </svg>
+           </div>
+
+           <!-- Halloween Image -->
+           <img 
+              id="main-image"
+              src="./halloween_gorseli.png" 
+              alt="Halloween Card" 
+              class="main-image"
+              onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"
+           />
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      function fitTextToContainer(element) {
+        if (!element || !element.dataset.text) return;
+        
+        const originalText = element.dataset.text;
+        const parentWidth = element.parentElement.clientWidth;
+        const maxWidth = parentWidth * 0.90; 
+        
+        let isMobile = window.innerWidth <= 600;
+        let startFontSize = isMobile ? 48 : 64; 
+        
+        let currentFontSize = startFontSize;
+        element.style.fontSize = currentFontSize + 'px';
+        element.style.whiteSpace = 'nowrap';
+        element.innerHTML = originalText;
+        
+        if (element.scrollWidth <= maxWidth) {
+            return;
+        }
+
+        if (originalText.includes(' ')) {
+            element.innerHTML = originalText.split(' ').join('<br>');
+        }
+
+        while (element.scrollWidth > maxWidth && currentFontSize > 12) {
+            currentFontSize--;
+            element.style.fontSize = currentFontSize + 'px';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        
+        // --- Name Control ---
+        const nameElement = document.getElementById('name-text');
+        const encodedName = params.get('ad');
+
+        if (encodedName) {
+          try {
+            const decodedName = decodeURIComponent(escape(window.atob(encodedName)));
+            nameElement.textContent = decodedName;
+            nameElement.dataset.text = decodedName; 
+            
+            requestAnimationFrame(() => fitTextToContainer(nameElement));
+          } catch (e) {
+            try {
+                 const simpleDecoded = atob(encodedName);
+                 nameElement.textContent = simpleDecoded;
+                 nameElement.dataset.text = simpleDecoded;
+                 requestAnimationFrame(() => fitTextToContainer(nameElement));
+            } catch (err) {
+                 console.error("Name could not be decoded:", err);
+                 nameElement.textContent = '';
+            }
+          }
+        } else {
+          nameElement.textContent = ''; 
+        }
+        
+        window.addEventListener('resize', () => {
+             fitTextToContainer(nameElement);
+        });
+
+        // --- Bat Animation Logic ---
+        const batsContainer = document.getElementById('bats-container');
+        const batCount = 8; // Don't crowd the screen too much with images
+        
+        // Function to spawn a single bat
+        function spawnBat(initial = false) {
+            const bat = document.createElement('img');
+            bat.src = './yarasa_gorseli.png'; // Using the requested image
+            bat.classList.add('bat');
+            bat.alt = '';
+            
+            // Random Properties
+            const topPos = Math.random() * 80; // Top 0% to 80%
+            const duration = 5 + Math.random() * 5; // 5s to 10s flight time
+            const size = 40 + Math.random() * 60; // 40px to 100px width
+            const delay = initial ? Math.random() * 5 : 0; // Random delay for initial batch
+
+            bat.style.top = topPos + '%';
+            bat.style.width = size + 'px';
+            bat.style.animationName = 'flyRight';
+            bat.style.animationDuration = duration + 's';
+            bat.style.animationTimingFunction = 'linear';
+            bat.style.animationDelay = delay + 's';
+
+            // When animation ends, remove bat and spawn a new one to keep cycle infinite but varied
+            bat.addEventListener('animationend', () => {
+                bat.remove();
+                spawnBat();
+            });
+
+            // Error handling for bat image - fallback to nothing (invisible)
+            bat.onerror = () => { bat.style.display = 'none'; };
+
+            batsContainer.appendChild(bat);
+        }
+
+        // Initialize bats
+        for (let i = 0; i < batCount; i++) {
+            spawnBat(true);
+        }
+      });
+    </script>
+  </body>
+</html>
