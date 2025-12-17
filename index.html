@@ -1,39 +1,529 @@
+<!-- UPDATE CHECKPOINT: v8.5 - Centralized Images (Root) -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OzelGunukutla.com</title>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Social Media Sharing Meta Tags (Open Graph) -->
+    <meta property="og:title" content="Happy Holidays! 🎄">
+    <meta property="og:description" content="Click to view your personalized greeting card.">
+    <meta property="og:type" content="website">
+    
+    <!-- viewport-fit=cover: Ensures full screen usage -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    
+    <!-- Mobile Browser Theme Color -->
+    <meta id="theme-color-meta" name="theme-color" content="#0f2b1d" />
+    
+    <!-- iOS Legacy -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Modern Standard -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Manifest for Orientation Lock (Base64 Encoded - English: Holiday Card) -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSG9saWRheSBDYXJkIiwic2hvcnRfbmFtZSI6IkdpZnQiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjMGYyYjFkIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjJiMWQifQ==" />
+    
+    <title>Merry Christmas</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #0f2b1d;
-            color: #F2D06B;
-            font-family: 'Dancing Script', cursive;
-            text-align: center;
+      :root {
+        /* Default Colors (Green Theme) */
+        --color-bg-dark: #0f2b1d;
+        --color-bg-light: #1A4731;
+        
+        --color-gold-start: #F2D06B;
+        --color-gold-end: #B38728;
+      }
+
+      html {
+        background-color: var(--color-bg-dark);
+        height: 100%;
+        transition: background-color 0.5s ease;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%; /* Fallback */
+        height: 100dvh; /* Dynamic viewport height */
+        background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+        font-family: 'Dancing Script', cursive;
+        overflow: hidden; 
+        -webkit-font-smoothing: antialiased;
+        position: fixed; 
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        transition: background 0.5s ease;
+      }
+
+      /* Layout */
+      .app-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        box-sizing: border-box;
+      }
+
+      .card-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-width: 450px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        padding: 1rem; 
+        box-sizing: border-box;
+      }
+
+      /* Typography */
+      .text-section {
+        text-align: center;
+        margin-bottom: 2vh;
+        z-index: 20;
+        position: relative;
+        width: 100%;
+        margin-top: 50px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .gold-text {
+        font-family: 'Dancing Script', cursive;
+        color: var(--color-gold-start);
+        font-weight: 700;
+        
+        /* Desktop Gold Effect */
+        background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 5s linear infinite;
+        
+        line-height: 1.4; 
+        padding: 0.2em 0.6em; 
+        display: inline-block; 
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+      }
+
+      @keyframes shine {
+        to { background-position: 200% center; }
+      }
+
+      .greeting-title {
+        font-size: 4.5rem;
+        margin: 0;
+        white-space: nowrap; 
+      }
+
+      .name-text {
+        font-size: 4rem;
+        margin-top: 0.2rem;
+        min-height: 4.5rem;
+        display: inline-block; 
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: visible; 
+      }
+
+      /* Mobile Settings */
+      @media (max-width: 600px) {
+        .greeting-title { 
+            font-size: 3.5rem; 
+            white-space: normal; 
+            line-height: 1.2;
         }
-        h1 {
+        
+        .name-text { 
             font-size: 3rem;
-            margin-bottom: 1rem;
         }
-        p {
-            font-family: sans-serif;
-            opacity: 0.7;
-            letter-spacing: 1px;
+        
+        .card-content { padding: 1rem; }
+        
+        .corner-decoration { width: 50px !important; height: 50px !important; }
+      }
+
+      /* Image Section */
+      .image-container {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        overflow: hidden;
+        margin-bottom: 2vh;
+        max-height: 55vh;
+        padding: 0;
+      }
+
+      .main-image {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+      }
+      
+      /* Fallback Icon Style */
+      .fallback-icon {
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        animation: float 3s ease-in-out infinite;
+      }
+      
+      .fallback-icon svg {
+        fill: var(--color-gold-start);
+        filter: drop-shadow(0 0 10px rgba(242, 208, 107, 0.5));
+      }
+
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+
+      /* Snowfall Animation */
+      .snowfall-container {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .snowflake {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+        filter: blur(1px);
+        top: -20px;
+        opacity: 0.8;
+      }
+
+      @keyframes fall {
+        0% { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.9; }
+        100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0.2; }
+      }
+
+      /* Ornamental Corners - FIXED POSITIONING */
+      .corner-decoration {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.9;
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+      }
+      
+      .corner-dot {
+          fill: var(--color-bg-dark);
+          transition: fill 0.5s ease;
+      }
+
+      .top-left { 
+          top: 0; 
+          left: 0; 
+          margin-top: env(safe-area-inset-top); 
+          margin-left: env(safe-area-inset-left);
+      }
+      .top-right { 
+          top: 0; 
+          right: 0; 
+          transform: scaleX(-1); 
+          margin-top: env(safe-area-inset-top);
+          margin-right: env(safe-area-inset-right);
+      }
+      
+      .bottom-left { 
+          bottom: 0;
+          left: 0; 
+          transform: scaleY(-1); 
+          bottom: calc(env(safe-area-inset-bottom) + 20px);
+          margin-left: env(safe-area-inset-left);
+      }
+      .bottom-right { 
+          bottom: 0;
+          right: 0; 
+          transform: scale(-1); 
+          bottom: calc(env(safe-area-inset-bottom) + 20px);
+          margin-right: env(safe-area-inset-right);
+      }
+
+      /* --- Orientation Lock Overlay (Mobile) --- */
+      #rotate-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-bg-dark);
+        z-index: 10000;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-gold-start);
+        text-align: center;
+        transition: background-color 0.5s ease;
+      }
+      
+      #rotate-overlay svg {
+        width: 80px;
+        height: 80px;
+        fill: var(--color-gold-start);
+        margin-bottom: 20px;
+        animation: rotate-phone 2s infinite ease-in-out;
+      }
+
+      @keyframes rotate-phone {
+        0%, 10% { transform: rotate(90deg); }
+        50%, 60% { transform: rotate(0deg); }
+        100% { transform: rotate(90deg); }
+      }
+
+      @media screen and (max-height: 550px) and (orientation: landscape) {
+        #rotate-overlay {
+            display: flex;
         }
+        .app-container, .corner-decoration {
+            visibility: hidden;
+        }
+      }
+
     </style>
-</head>
-<body>
-    <h1>OzelGunukutla.com</h1>
-    <p>Custom designed cards for your loved ones.</p>
-</body>
+  </head>
+  <body>
+
+    <!-- SVG Definitions -->
+    <svg width="0" height="0">
+      <defs>
+        <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F2D06B" />
+          <stop offset="40%" stop-color="#B38728" />
+          <stop offset="60%" stop-color="#F2D06B" />
+          <stop offset="100%" stop-color="#B38728" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <!-- Rotate Device Overlay -->
+    <div id="rotate-overlay">
+        <svg viewBox="0 0 24 24">
+            <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+        </svg>
+        <h2 style="font-family: sans-serif; font-size: 1.5rem; margin: 0 20px;">Please Rotate Your Device</h2>
+    </div>
+
+    <!-- Snowfall Effect -->
+    <div id="snowfall-container" class="snowfall-container"></div>
+
+    <!-- Corners -->
+    <svg class="corner-decoration top-left" viewBox="0 0 100 100">
+      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
+    </svg>
+
+    <svg class="corner-decoration top-right" viewBox="0 0 100 100">
+      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
+    </svg>
+
+    <svg class="corner-decoration bottom-left" viewBox="0 0 100 100">
+      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
+    </svg>
+
+    <svg class="corner-decoration bottom-right" viewBox="0 0 100 100">
+      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
+      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
+      <circle cx="5" cy="5" r="3" class="corner-dot" />
+    </svg>
+
+    <div class="app-container">
+      <div class="card-content">
+        
+        <div class="text-section">
+          <h1 class="greeting-title gold-text">
+            Merry Christmas
+          </h1>
+
+          <h2 id="name-text" class="name-text gold-text">
+            Loading...
+          </h2>
+        </div>
+
+        <div class="image-container">
+           <!-- Fallback Icon if image fails -->
+           <div id="fallback-icon" class="fallback-icon">
+              <svg viewBox="0 0 24 24" width="150" height="150">
+                  <path d="M20 12v10H4V12h16zm-9-6c1.1 0 2 .9 2 2h2c0-2.21-1.79-4-4-4s-4 1.79-4 4h2c0-1.1.9-2 2-2zm-3.13 4l-1.8 2h9.86l-1.8-2H7.87zM22 10h-4c0-3.31-2.69-6-6-6s-6 2.69-6 6H2v2h20v-2z"/>
+              </svg>
+           </div>
+
+           <!-- UPDATED: Points to central images folder (no longer parent directory) -->
+           <img 
+              id="main-image"
+              src="images/yilbasi_gorseli.png" 
+              alt="Holiday Card" 
+              class="main-image"
+              onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"
+           />
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      function fitTextToContainer(element) {
+        if (!element || !element.dataset.text) return;
+        
+        const originalText = element.dataset.text;
+        const parentWidth = element.parentElement.clientWidth;
+        const maxWidth = parentWidth * 0.90; 
+        
+        let isMobile = window.innerWidth <= 600;
+        let startFontSize = isMobile ? 48 : 64; 
+        
+        // Phase 1: Try single line
+        let currentFontSize = startFontSize;
+        element.style.fontSize = currentFontSize + 'px';
+        element.style.whiteSpace = 'nowrap';
+        element.innerHTML = originalText;
+        
+        if (element.scrollWidth <= maxWidth) {
+            return;
+        }
+
+        // Phase 2: Split if spaces exist
+        if (originalText.includes(' ')) {
+            element.innerHTML = originalText.split(' ').join('<br>');
+        }
+
+        // Phase 3: Resize down
+        while (element.scrollWidth > maxWidth && currentFontSize > 12) {
+            currentFontSize--;
+            element.style.fontSize = currentFontSize + 'px';
+        }
+      }
+
+      function applyTheme(isRed) {
+        const root = document.documentElement;
+        const metaThemeColor = document.getElementById('theme-color-meta');
+        
+        if (isRed) {
+            // Dark Red Theme
+            root.style.setProperty('--color-bg-dark', '#2b0a0a');
+            root.style.setProperty('--color-bg-light', '#591414');
+            if (metaThemeColor) metaThemeColor.setAttribute('content', '#2b0a0a');
+        } else {
+            // Default Green Theme
+            root.style.setProperty('--color-bg-dark', '#0f2b1d');
+            root.style.setProperty('--color-bg-light', '#1A4731');
+            if (metaThemeColor) metaThemeColor.setAttribute('content', '#0f2b1d');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        
+        // --- Theme Control ---
+        if (params.has('ztxy')) {
+            applyTheme(true);
+        } else {
+            applyTheme(false);
+        }
+
+        // --- Name Control ---
+        const nameElement = document.getElementById('name-text');
+        const encodedName = params.get('ad');
+
+        if (encodedName) {
+          try {
+            const decodedName = decodeURIComponent(escape(window.atob(encodedName)));
+            nameElement.textContent = decodedName;
+            nameElement.dataset.text = decodedName; 
+            
+            requestAnimationFrame(() => fitTextToContainer(nameElement));
+          } catch (e) {
+            try {
+                 const simpleDecoded = atob(encodedName);
+                 nameElement.textContent = simpleDecoded;
+                 nameElement.dataset.text = simpleDecoded;
+                 requestAnimationFrame(() => fitTextToContainer(nameElement));
+            } catch (err) {
+                 console.error("Name could not be decoded:", err);
+                 nameElement.textContent = '';
+            }
+          }
+        } else {
+          nameElement.textContent = ''; 
+        }
+        
+        window.addEventListener('resize', () => {
+             fitTextToContainer(nameElement);
+        });
+
+        // --- Snow Effect ---
+        const snowContainer = document.getElementById('snowfall-container');
+        const flakeCount = 50; 
+
+        for (let i = 0; i < flakeCount; i++) {
+          const flake = document.createElement('div');
+          flake.classList.add('snowflake');
+          
+          const left = Math.random() * 100;
+          const duration = 10 + Math.random() * 10;
+          const opacity = 0.2 + Math.random() * 0.5;
+          const size = 3 + Math.random() * 4;
+          const delay = Math.random() * 10;
+
+          flake.style.left = left + '%';
+          flake.style.width = size + 'px';
+          flake.style.height = size + 'px';
+          flake.style.opacity = opacity;
+          flake.style.animationName = 'fall';
+          flake.style.animationDuration = duration + 's';
+          flake.style.animationTimingFunction = 'linear';
+          flake.style.animationIterationCount = 'infinite';
+          flake.style.animationDelay = '-' + delay + 's';
+
+          snowContainer.appendChild(flake);
+        }
+      });
+    </script>
+  </body>
 </html>

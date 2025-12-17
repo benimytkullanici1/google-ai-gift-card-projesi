@@ -1,4 +1,4 @@
-<!-- UPDATE CHECKPOINT: v10.1 - Centralized Images -->
+<!-- UPDATE CHECKPOINT: v10.2 - Bat Animation Fix & Dual Direction -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -220,11 +220,13 @@
       .bat {
         position: absolute;
         opacity: 0.7;
-        width: 50px; /* Base size, will be randomized */
+        width: 50px; 
         height: auto;
+        /* CRITICAL FIX: Start them way off-screen so they aren't visible during the delay */
+        left: -300px; 
       }
 
-      /* Bats flying left to right with a wavy motion */
+      /* Left to Right */
       @keyframes flyRight {
         0% { 
             left: -150px; 
@@ -236,6 +238,22 @@
         100% { 
             left: 110%; 
             transform: translateY(0) rotate(10deg); 
+        }
+      }
+
+      /* Right to Left (New) */
+      @keyframes flyLeft {
+        0% { 
+            left: 110%; 
+            /* ScaleX(-1) flips the image to face left */
+            transform: translateY(0) rotate(-10deg) scaleX(-1); 
+        }
+        25% { transform: translateY(-30px) rotate(10deg) scaleX(-1); }
+        50% { transform: translateY(0) rotate(-10deg) scaleX(-1); }
+        75% { transform: translateY(30px) rotate(10deg) scaleX(-1); }
+        100% { 
+            left: -150px; 
+            transform: translateY(0) rotate(-10deg) scaleX(-1); 
         }
       }
 
@@ -295,8 +313,6 @@
     <!-- Bats Animation Container -->
     <div id="bats-container" class="bats-container"></div>
 
-    <!-- Note: Corner decorations removed as requested -->
-
     <div class="app-container">
       <div class="card-content">
         
@@ -319,7 +335,7 @@
               </svg>
            </div>
 
-           <!-- UPDATED: Points to central images folder -->
+           <!-- Centralized Image Source -->
            <img 
               id="main-image"
               src="../images/halloween_gorseli.png" 
@@ -397,36 +413,40 @@
 
         // --- Bat Animation Logic ---
         const batsContainer = document.getElementById('bats-container');
-        const batCount = 8; // Don't crowd the screen too much with images
+        const batCount = 8; 
         
         // Function to spawn a single bat
         function spawnBat(initial = false) {
             const bat = document.createElement('img');
-            // UPDATED: Points to central images folder
             bat.src = '../images/yarasa_gorseli.png'; 
             bat.classList.add('bat');
             bat.alt = '';
             
+            // Random Direction (50% chance for Left or Right)
+            const isFlyingRight = Math.random() > 0.5;
+
             // Random Properties
             const topPos = Math.random() * 80; // Top 0% to 80%
             const duration = 5 + Math.random() * 5; // 5s to 10s flight time
             const size = 40 + Math.random() * 60; // 40px to 100px width
-            const delay = initial ? Math.random() * 5 : 0; // Random delay for initial batch
+            const delay = initial ? Math.random() * 5 : 0; 
 
             bat.style.top = topPos + '%';
             bat.style.width = size + 'px';
-            bat.style.animationName = 'flyRight';
+            
+            // Assign Animation based on direction
+            bat.style.animationName = isFlyingRight ? 'flyRight' : 'flyLeft';
+            
             bat.style.animationDuration = duration + 's';
             bat.style.animationTimingFunction = 'linear';
             bat.style.animationDelay = delay + 's';
 
-            // When animation ends, remove bat and spawn a new one to keep cycle infinite but varied
+            // When animation ends, recycle
             bat.addEventListener('animationend', () => {
                 bat.remove();
                 spawnBat();
             });
 
-            // Error handling for bat image - fallback to nothing (invisible)
             bat.onerror = () => { bat.style.display = 'none'; };
 
             batsContainer.appendChild(bat);
