@@ -1,4 +1,4 @@
-<!-- UPDATE CHECKPOINT: v1.0 - Mother's Day - Falling Leaves -->
+<!-- UPDATE CHECKPOINT: v1.1 - Mother's Day - Image Leaves & Rose Theme -->
 <!DOCTYPE html>
 <html lang="tr">
   <head>
@@ -14,8 +14,8 @@
     <!-- viewport-fit=cover -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     
-    <!-- Mobile Browser Theme Color (Warm Rose/Brown) -->
-    <meta id="theme-color-meta" name="theme-color" content="#2b1a1a" />
+    <!-- Mobile Browser Theme Color (Deep Rose) -->
+    <meta id="theme-color-meta" name="theme-color" content="#4a121d" />
     
     <!-- iOS Legacy -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -23,7 +23,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Manifest (Flower Icon Base64) -->
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQW5uZWxlciBHw7xuw7wiLCJzaG9ydF9uYW1lIjoiQW5uZW0iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjMmIxYTFhIiwiYmFja2dyb3VuZF9jb2xvciI6IiMyYjFhMWEifQ==" />
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQW5uZWxlciBHw7xuw7wiLCJzaG9ydF9uYW1lIjoiQW5uZW0iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjNGExMjFkIiwiYmFja2dyb3VuZF9jb2xvciI6IiM0YTEyMWQifQ==" />
     
     <title>Anneler Günün Kutlu Olsun</title>
     
@@ -33,10 +33,11 @@
 
     <style>
       :root {
-        /* Mother's Day Theme Defaults */
-        /* Warm, elegant dark rose/brown background */
-        --color-bg-dark: #2b1a1a;  
-        --color-bg-light: #4a2e2e; 
+        /* Mother's Day Theme - Dark Pink & Rose Dry */
+        /* Deep Berry/Burgundy */
+        --color-bg-dark: #4a121d;  
+        /* Muted Rose/Mauve (Gül Kurusu) */
+        --color-bg-light: #853b4d; 
         
         --color-gold-start: #F2D06B;
         --color-gold-end: #B38728;
@@ -133,7 +134,7 @@
       }
 
       .greeting-title {
-        font-size: 4rem; /* Slightly smaller for longer Turkish text */
+        font-size: 4rem;
         margin: 0;
         white-space: nowrap; 
       }
@@ -218,36 +219,42 @@
         z-index: 1;
       }
       
-      /* The container moves down */
+      /* The container moves down vertically */
       .leaf-wrapper {
         position: absolute;
-        top: -10%;
+        top: -15%; /* Start slightly higher to hide init */
         animation-name: drop;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
       }
 
-      /* The SVG inside sways and rotates */
-      .leaf-svg {
+      /* The Image simulates the "Gondola" swing */
+      /* It sways left/right and rotates */
+      .leaf-image {
         width: 100%;
-        height: 100%;
-        fill: var(--color-gold-start);
-        opacity: 0.6;
-        animation-name: sway;
-        animation-timing-function: ease-in-out;
+        height: auto;
+        opacity: 0.8;
+        transform-origin: center top; /* Pivot point at the top like a gondola */
+        animation-name: gondola-sway;
+        animation-timing-function: ease-in-out; /* Slow at ends, fast in middle */
         animation-iteration-count: infinite;
-        animation-direction: alternate; /* Sway back and forth */
-        filter: drop-shadow(0 0 2px rgba(255,255,255,0.2));
+        animation-direction: alternate; /* Back and forth */
+        filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
       }
 
       @keyframes drop {
-        0% { top: -10%; }
-        100% { top: 110%; }
+        0% { top: -15%; }
+        100% { top: 115%; }
       }
 
-      @keyframes sway {
-        0% { transform: rotate(-35deg) translateX(-15px); }
-        100% { transform: rotate(35deg) translateX(15px); }
+      /* Pendulum motion */
+      @keyframes gondola-sway {
+        0% { 
+            transform: translateX(-50px) rotate(-35deg); 
+        }
+        100% { 
+            transform: translateX(50px) rotate(35deg); 
+        }
       }
 
       /* Ornamental Corners - FIXED POSITIONING */
@@ -490,41 +497,36 @@
              fitTextToContainer(nameElement);
         });
 
-        // --- Falling Leaves Logic ---
+        // --- Falling Leaves Logic (Image Based) ---
         const leavesContainer = document.getElementById('leaves-container');
-        const leafCount = 20; 
-
-        // Simple Leaf SVG string
-        // A generic leaf shape: M0,0 C5,-10 15,-5 20,10 C15,20 5,20 0,10 C-5,20 -15,20 -20,10 C-15,-5 -5,-10 0,0
-        // Scaled to fit roughly 24x24 box
-        const leafSvgContent = `
-            <svg class="leaf-svg" viewBox="0 0 40 40">
-                <path d="M20,0 C25,-5 35,5 40,20 C35,35 25,35 20,25 C15,35 5,35 0,20 C5,5 15,-5 20,0 Z" />
-            </svg>
-        `;
+        const leafCount = 15; 
 
         for (let i = 0; i < leafCount; i++) {
           const leafWrapper = document.createElement('div');
           leafWrapper.classList.add('leaf-wrapper');
-          leafWrapper.innerHTML = leafSvgContent;
           
+          // Use Image Tag instead of SVG
+          const leafImg = document.createElement('img');
+          leafImg.src = '../images/leaf_gorseli.png';
+          leafImg.classList.add('leaf-image');
+          leafImg.alt = '';
+          
+          leafWrapper.appendChild(leafImg);
+          
+          // Randomize Properties
           const left = Math.random() * 100; // Random horizontal pos
-          const duration = 8 + Math.random() * 7; // Fall duration
-          const swayDuration = 3 + Math.random() * 4; // Sway duration
-          const size = 20 + Math.random() * 20; // Size variation
+          const duration = 10 + Math.random() * 8; // Fall duration
+          const swayDuration = 3 + Math.random() * 3; // Gondola swing duration
+          const size = 30 + Math.random() * 40; // Size variation
           const delay = Math.random() * 10; 
 
           leafWrapper.style.left = left + '%';
           leafWrapper.style.width = size + 'px';
-          leafWrapper.style.height = size + 'px';
           leafWrapper.style.animationDuration = duration + 's';
           leafWrapper.style.animationDelay = '-' + delay + 's';
           
-          // Access internal SVG to set sway speed independently
-          const svg = leafWrapper.querySelector('svg');
-          if (svg) {
-              svg.style.animationDuration = swayDuration + 's';
-          }
+          // Independent sway timing
+          leafImg.style.animationDuration = swayDuration + 's';
 
           leavesContainer.appendChild(leafWrapper);
         }

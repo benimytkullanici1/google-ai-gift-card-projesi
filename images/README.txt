@@ -5,5 +5,6 @@ Lütfen aşağıdaki resim dosyalarını bu klasörün (images) içine yükleyin
 3. halloween_gorseli.png    (Cadılar bayramı kartı için)
 4. yarasa_gorseli.png       (Cadılar bayramı yarasa animasyonu için)
 5. annelergunu_gorseli.png  (Anneler günü kartı için)
+6. leaf_gorseli.png         (Anneler günü yaprak animasyonu için)
 
 Bu klasör, tüm kartların ortak resim havuzudur.
