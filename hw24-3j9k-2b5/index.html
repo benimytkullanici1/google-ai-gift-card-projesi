@@ -1,4 +1,4 @@
-<!-- UPDATE CHECKPOINT: v10.0 - Halloween Edition -->
+<!-- UPDATE CHECKPOINT: v10.1 - Centralized Images -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -319,10 +319,10 @@
               </svg>
            </div>
 
-           <!-- Halloween Image -->
+           <!-- UPDATED: Points to central images folder -->
            <img 
               id="main-image"
-              src="./halloween_gorseli.png" 
+              src="../images/halloween_gorseli.png" 
               alt="Halloween Card" 
               class="main-image"
               onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"
@@ -402,7 +402,8 @@
         // Function to spawn a single bat
         function spawnBat(initial = false) {
             const bat = document.createElement('img');
-            bat.src = './yarasa_gorseli.png'; // Using the requested image
+            // UPDATED: Points to central images folder
+            bat.src = '../images/yarasa_gorseli.png'; 
             bat.classList.add('bat');
             bat.alt = '';
             
