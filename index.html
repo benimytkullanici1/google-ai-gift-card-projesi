@@ -1,4 +1,4 @@
-<!-- UPDATE CHECKPOINT: v9.0 - Root Dynamic Text Sync -->
+<!-- UPDATE CHECKPOINT: v9.1 - Root Dynamic Text Sync - Font Size Refined -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -65,7 +65,8 @@
     <script>
       function fitDynamicText(el, maxLines = 3) {
         const isMobile = window.innerWidth <= 600;
-        let fontSize = isMobile ? 48 : 64; 
+        // Increased by approx 2pt (3px)
+        let fontSize = isMobile ? 51 : 67; 
         el.style.fontSize = fontSize + 'px';
         el.style.whiteSpace = 'normal';
         function isOverLimit() {
