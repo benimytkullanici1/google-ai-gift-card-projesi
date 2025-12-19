@@ -1,536 +1,108 @@
-<!-- UPDATE CHECKPOINT: v1.3 - Mother's Day - English Text -->
+<!-- UPDATE CHECKPOINT: v2.0 - Mother's Day Card - Fully Dynamic Text & Auto-scaling -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Hidden Page -->
     <meta name="robots" content="noindex, nofollow">
-
-    <!-- Social Media Sharing Meta Tags -->
     <meta property="og:title" content="Happy Mother's Day! 🌸">
-    <meta property="og:description" content="A special card made just for you.">
+    <meta property="og:description" content="Click to view your personalized message for mom.">
     <meta property="og:type" content="website">
-    
-    <!-- viewport-fit=cover -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    
-    <!-- Mobile Browser Theme Color (Deep Rose) -->
     <meta id="theme-color-meta" name="theme-color" content="#4a121d" />
-    
-    <!-- iOS Legacy -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    
-    <!-- Manifest (Flower Icon Base64) -->
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQW5uZWxlciBHw7xuw7wiLCJzaG9ydF9uYW1lIjoiQW5uZW0iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjNGExMjFkIiwiYmFja2dyb3VuZF9jb2xvciI6IiM0YTEyMWQifQ==" />
-    
     <title>Happy Mother's Day</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
-      :root {
-        /* Mother's Day Theme - Dark Pink & Rose Dry */
-        /* Deep Berry/Burgundy */
-        --color-bg-dark: #4a121d;  
-        /* Muted Rose/Mauve (Gül Kurusu) */
-        --color-bg-light: #853b4d; 
-        
-        --color-gold-start: #F2D06B;
-        --color-gold-end: #B38728;
-      }
-
-      html {
-        background-color: var(--color-bg-dark);
-        height: 100%;
-        transition: background-color 0.5s ease;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        height: 100dvh;
-        background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
-        font-family: 'Dancing Script', cursive;
-        overflow: hidden; 
-        -webkit-font-smoothing: antialiased;
-        position: fixed; 
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        transition: background 0.5s ease;
-      }
-
-      /* Layout */
-      .app-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 10;
-        padding-top: max(20px, env(safe-area-inset-top));
-        padding-bottom: max(20px, env(safe-area-inset-bottom));
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-        box-sizing: border-box;
-      }
-
-      .card-content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        max-width: 450px; 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 2;
-        padding: 1rem; 
-        box-sizing: border-box;
-      }
-
-      /* Typography */
-      .text-section {
-        text-align: center;
-        margin-bottom: 2vh;
-        z-index: 20;
-        position: relative;
-        width: 100%;
-        margin-top: 50px; 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .gold-text {
-        font-family: 'Dancing Script', cursive;
-        color: var(--color-gold-start);
-        font-weight: 700;
-        
-        /* Gold Gradient Effect */
-        background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shine 5s linear infinite;
-        
-        line-height: 1.4; 
-        padding: 0.2em 0.6em; 
-        display: inline-block; 
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
-      }
-
-      @keyframes shine {
-        to { background-position: 200% center; }
-      }
-
-      .greeting-title {
-        font-size: 4rem;
-        margin: 0;
-        white-space: nowrap; 
-      }
-
-      .name-text {
-        font-size: 4rem;
-        margin-top: 0.2rem;
-        min-height: 4.5rem;
-        display: inline-block; 
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: visible; 
-      }
-
-      /* Mobile Settings */
-      @media (max-width: 600px) {
-        .greeting-title { 
-            font-size: 3rem; 
-            white-space: normal; 
-            line-height: 1.2;
-        }
-        
-        .name-text { 
-            font-size: 3rem;
-        }
-        
-        .card-content { padding: 1rem; }
-      }
-
-      /* Image Section */
-      .image-container {
-        width: 100%;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 10;
-        overflow: hidden;
-        margin-bottom: 2vh;
-        max-height: 55vh;
-        padding: 0;
-      }
-
-      .main-image {
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-      }
-      
-      /* Fallback Icon (Flower) */
-      .fallback-icon {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        animation: pulse 3s ease-in-out infinite;
-      }
-      
-      .fallback-icon svg {
-        fill: var(--color-gold-start);
-        filter: drop-shadow(0 0 10px rgba(242, 208, 107, 0.5));
-      }
-
-      @keyframes pulse {
-        0% { opacity: 0.6; transform: scale(0.95); }
-        50% { opacity: 1; transform: scale(1.05); }
-        100% { opacity: 0.6; transform: scale(0.95); }
-      }
-
-      /* --- Falling Leaves Animation --- */
-      .leaves-container {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: 1;
-      }
-      
-      /* The container moves down vertically */
-      .leaf-wrapper {
-        position: absolute;
-        top: -15%; /* Start slightly higher to hide init */
-        animation-name: drop;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-      }
-
-      /* The Image simulates the "Gondola" swing */
-      /* It sways left/right and rotates */
-      .leaf-image {
-        width: 100%;
-        height: auto;
-        opacity: 0.8;
-        transform-origin: center top; /* Pivot point at the top like a gondola */
-        animation-name: gondola-sway;
-        animation-timing-function: ease-in-out; /* Slow at ends, fast in middle */
-        animation-iteration-count: infinite;
-        animation-direction: alternate; /* Back and forth */
-        filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
-      }
-
-      @keyframes drop {
-        0% { top: -15%; }
-        100% { top: 115%; }
-      }
-
-      /* Pendulum motion */
-      @keyframes gondola-sway {
-        0% { 
-            transform: translateX(-50px) rotate(-35deg); 
-        }
-        100% { 
-            transform: translateX(50px) rotate(35deg); 
-        }
-      }
-
-      /* Ornamental Corners - FIXED POSITIONING */
-      .corner-decoration {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        pointer-events: none;
-        z-index: 9999;
-        opacity: 0.9;
-        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
-      }
-      
-      .corner-dot {
-          fill: var(--color-bg-dark);
-          transition: fill 0.5s ease;
-      }
-
-      .top-left { 
-          top: 0; 
-          left: 0; 
-          margin-top: env(safe-area-inset-top); 
-          margin-left: env(safe-area-inset-left);
-      }
-      .top-right { 
-          top: 0; 
-          right: 0; 
-          transform: scaleX(-1); 
-          margin-top: env(safe-area-inset-top); 
-          margin-right: env(safe-area-inset-right);
-      }
-      .bottom-left { 
-          bottom: 0;
-          left: 0; 
-          transform: scaleY(-1); 
-          bottom: calc(env(safe-area-inset-bottom) + 20px);
-          margin-left: env(safe-area-inset-left);
-      }
-      .bottom-right { 
-          bottom: 0;
-          right: 0; 
-          transform: scale(-1); 
-          bottom: calc(env(safe-area-inset-bottom) + 20px);
-          margin-right: env(safe-area-inset-right);
-      }
-
-      /* --- Orientation Lock Overlay (Mobile) --- */
-      #rotate-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--color-bg-dark);
-        z-index: 10000;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-gold-start);
-        text-align: center;
-        transition: background-color 0.5s ease;
-      }
-      
-      #rotate-overlay svg {
-        width: 80px;
-        height: 80px;
-        fill: var(--color-gold-start);
-        margin-bottom: 20px;
-        animation: rotate-phone 2s infinite ease-in-out;
-      }
-
-      @keyframes rotate-phone {
-        0%, 10% { transform: rotate(90deg); }
-        50%, 60% { transform: rotate(0deg); }
-        100% { transform: rotate(90deg); }
-      }
-
-      @media screen and (max-height: 550px) and (orientation: landscape) {
-        #rotate-overlay {
-            display: flex;
-        }
-        .app-container, .corner-decoration {
-            visibility: hidden;
-        }
-      }
-
+      :root { --color-bg-dark: #4a121d; --color-bg-light: #853b4d; --color-gold-start: #F2D06B; --color-gold-end: #B38728; }
+      html { background-color: var(--color-bg-dark); height: 100%; transition: background-color 0.5s ease; }
+      body { margin: 0; padding: 0; width: 100%; height: 100dvh; background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%); font-family: 'Dancing Script', cursive; overflow: hidden; -webkit-font-smoothing: antialiased; position: fixed; left: 0; top: 0; right: 0; bottom: 0; }
+      .app-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); box-sizing: border-box; }
+      .card-content { position: relative; width: 100%; height: 100%; max-width: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; box-sizing: border-box; }
+      .text-section { text-align: center; width: 100%; margin-top: 40px; margin-bottom: 2vh; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 150px; }
+      .dynamic-message { font-family: 'Dancing Script', cursive; color: var(--color-gold-start); font-weight: 700; background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; line-height: 1.2; padding: 0 0.5rem; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); word-wrap: break-word; overflow-wrap: break-word; text-align: center; width: 100%; }
+      @keyframes shine { to { background-position: 200% center; } }
+      .image-container { width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; overflow: hidden; margin-bottom: 2vh; max-height: 55vh; }
+      .main-image { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
+      .fallback-icon { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; animation: pulse 3s infinite; }
+      .fallback-icon svg { fill: var(--color-gold-start); filter: drop-shadow(0 0 10px rgba(242, 208, 107, 0.5)); }
+      @keyframes pulse { 0% { opacity: 0.6; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.6; transform: scale(0.95); } }
+      .leaves-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+      .leaf-wrapper { position: absolute; top: -15%; animation: drop linear infinite; }
+      .leaf-image { width: 100%; height: auto; opacity: 0.8; transform-origin: center top; animation: gondola-sway ease-in-out infinite alternate; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3)); }
+      @keyframes drop { 0% { top: -15%; } 100% { top: 115%; } }
+      @keyframes gondola-sway { 0% { transform: translateX(-50px) rotate(-35deg); } 100% { transform: translateX(50px) rotate(35deg); } }
+      .corner-decoration { position: fixed; width: 80px; height: 80px; pointer-events: none; z-index: 9999; opacity: 0.9; }
+      .corner-dot { fill: var(--color-bg-dark); }
+      .top-left { top: 0; left: 0; margin-top: env(safe-area-inset-top); margin-left: env(safe-area-inset-left); }
+      .top-right { top: 0; right: 0; transform: scaleX(-1); margin-top: env(safe-area-inset-top); margin-right: env(safe-area-inset-right); }
+      .bottom-left { bottom: 0; left: 0; transform: scaleY(-1); bottom: calc(env(safe-area-inset-bottom) + 10px); margin-left: env(safe-area-inset-left); }
+      .bottom-right { bottom: 0; right: 0; transform: scale(-1); bottom: calc(env(safe-area-inset-bottom) + 10px); margin-right: env(safe-area-inset-right); }
+      #rotate-overlay { display: none; position: fixed; inset: 0; background-color: var(--color-bg-dark); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: var(--color-gold-start); text-align: center; }
+      #rotate-overlay svg { width: 80px; height: 80px; fill: var(--color-gold-start); margin-bottom: 20px; animation: rotate-phone 2s infinite ease-in-out; }
+      @keyframes rotate-phone { 0%, 10% { transform: rotate(90deg); } 50%, 60% { transform: rotate(0deg); } 100% { transform: rotate(90deg); } }
+      @media screen and (max-height: 550px) and (orientation: landscape) { #rotate-overlay { display: flex; } .app-container { visibility: hidden; } }
     </style>
   </head>
   <body>
-
-    <!-- SVG Definitions -->
-    <svg width="0" height="0">
-      <defs>
-        <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#F2D06B" />
-          <stop offset="40%" stop-color="#B38728" />
-          <stop offset="60%" stop-color="#F2D06B" />
-          <stop offset="100%" stop-color="#B38728" />
-        </linearGradient>
-      </defs>
-    </svg>
-
-    <!-- Rotate Device Overlay -->
-    <div id="rotate-overlay">
-        <svg viewBox="0 0 24 24">
-            <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
-        </svg>
-        <h2 style="font-family: sans-serif; font-size: 1.5rem; margin: 0 20px;">Please Rotate Your Device</h2>
-    </div>
-
-    <!-- Leaves Animation Container -->
+    <svg width="0" height="0"><defs><linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F2D06B" /><stop offset="40%" stop-color="#B38728" /><stop offset="60%" stop-color="#F2D06B" /><stop offset="100%" stop-color="#B38728" /></linearGradient></defs></svg>
+    <div id="rotate-overlay"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg><h2>Please Rotate Your Device</h2></div>
     <div id="leaves-container" class="leaves-container"></div>
-
-    <!-- Corners -->
-    <svg class="corner-decoration top-left" viewBox="0 0 100 100">
-      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
-      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
-      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" class="corner-dot" />
-    </svg>
-
-    <svg class="corner-decoration top-right" viewBox="0 0 100 100">
-      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
-      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
-      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" class="corner-dot" />
-    </svg>
-
-    <svg class="corner-decoration bottom-left" viewBox="0 0 100 100">
-      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
-      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
-      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" class="corner-dot" />
-    </svg>
-
-    <svg class="corner-decoration bottom-right" viewBox="0 0 100 100">
-      <path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round" />
-      <path d="M15,100 L15,15 L100,15" stroke="url(#gold-gradient)" stroke-width="1" fill="none" opacity="0.6" />
-      <circle cx="5" cy="5" r="8" fill="url(#gold-gradient)" />
-      <circle cx="5" cy="5" r="3" class="corner-dot" />
-    </svg>
-
+    <svg class="corner-decoration top-left" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
+    <svg class="corner-decoration top-right" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
+    <svg class="corner-decoration bottom-left" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
+    <svg class="corner-decoration bottom-right" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
     <div class="app-container">
       <div class="card-content">
-        
-        <div class="text-section">
-          <h1 class="greeting-title gold-text">
-            Happy Mother's Day
-          </h1>
-
-          <h2 id="name-text" class="name-text gold-text">
-            Loading...
-          </h2>
-        </div>
-
+        <div class="text-section"><h1 id="dynamic-message" class="dynamic-message"></h1></div>
         <div class="image-container">
-           <!-- Fallback Icon (Flower) -->
-           <div id="fallback-icon" class="fallback-icon">
-              <!-- Simple Flower SVG -->
-              <svg viewBox="0 0 24 24" width="150" height="150">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M3.5 13c-1.38 0-2.5 1.12-2.5 2.5 0 2.67 4 6.5 4 6.5s-1.5-2.83-1.5-4v-5zM20.5 13v5c0 1.17-1.5 4-1.5 4s4-3.83 4-6.5c0-1.38-1.12-2.5-2.5-2.5z"/>
-              </svg>
-           </div>
-
-           <!-- Centralized Image Source -->
-           <img 
-              id="main-image"
-              src="../images/annelergunu_gorseli.png" 
-              alt="Mother's Day Card" 
-              class="main-image"
-              onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"
-           />
+           <div id="fallback-icon" class="fallback-icon"><svg viewBox="0 0 24 24" width="150" height="150"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/><path d="M3.5 13c-1.38 0-2.5 1.12-2.5 1.35s-1.5-2.83-1.5-4v-5zM20.5 13v5c0 1.17-1.5 4-1.5 4s4-3.83 4-6.5c0-1.38-1.12-2.5-2.5-2.5z"/></svg></div>
+           <img id="main-image" src="../images/annelergunu_gorseli.png" alt="Mother's Day Card" class="main-image" onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"/>
         </div>
-
       </div>
     </div>
-
     <script>
-      function fitTextToContainer(element) {
-        if (!element || !element.dataset.text) return;
-        
-        const originalText = element.dataset.text;
-        const parentWidth = element.parentElement.clientWidth;
-        const maxWidth = parentWidth * 0.90; 
-        
-        let isMobile = window.innerWidth <= 600;
-        let startFontSize = isMobile ? 48 : 64; 
-        
-        let currentFontSize = startFontSize;
-        element.style.fontSize = currentFontSize + 'px';
-        element.style.whiteSpace = 'nowrap';
-        element.innerHTML = originalText;
-        
-        if (element.scrollWidth <= maxWidth) {
-            return;
+      function fitDynamicText(el, maxLines = 3) {
+        const isMobile = window.innerWidth <= 600;
+        let fontSize = isMobile ? 51 : 67; 
+        el.style.fontSize = fontSize + 'px';
+        el.style.whiteSpace = 'normal';
+        function isOverLimit() {
+          const style = window.getComputedStyle(el);
+          const lineHeight = parseFloat(style.lineHeight);
+          const height = el.getBoundingClientRect().height;
+          const limit = lineHeight * maxLines + 2;
+          return height > limit;
         }
-
-        if (originalText.includes(' ')) {
-            element.innerHTML = originalText.split(' ').join('<br>');
-        }
-
-        while (element.scrollWidth > maxWidth && currentFontSize > 12) {
-            currentFontSize--;
-            element.style.fontSize = currentFontSize + 'px';
-        }
+        while (isOverLimit() && fontSize > 10) { fontSize -= 1; el.style.fontSize = fontSize + 'px'; }
       }
-
       document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
-        
-        // --- Name Control ---
-        const nameElement = document.getElementById('name-text');
-        const encodedName = params.get('ad');
-
-        if (encodedName) {
-          try {
-            const decodedName = decodeURIComponent(escape(window.atob(encodedName)));
-            nameElement.textContent = decodedName;
-            nameElement.dataset.text = decodedName; 
-            
-            requestAnimationFrame(() => fitTextToContainer(nameElement));
-          } catch (e) {
-            try {
-                 const simpleDecoded = atob(encodedName);
-                 nameElement.textContent = simpleDecoded;
-                 nameElement.dataset.text = simpleDecoded;
-                 requestAnimationFrame(() => fitTextToContainer(nameElement));
-            } catch (err) {
-                 console.error("Name could not be decoded:", err);
-                 nameElement.textContent = '';
-            }
-          }
-        } else {
-          nameElement.textContent = ''; 
+        const msgElement = document.getElementById('dynamic-message');
+        const encodedData = params.get('msg') || params.get('ad');
+        let textContent = "Happy Mother's Day";
+        if (encodedData) {
+          try { textContent = decodeURIComponent(escape(window.atob(encodedData))); } 
+          catch (e) { try { textContent = atob(encodedData); } catch (err) {} }
         }
-        
-        window.addEventListener('resize', () => {
-             fitTextToContainer(nameElement);
-        });
-
-        // --- Falling Leaves Logic (Image Based) ---
+        msgElement.textContent = textContent;
+        requestAnimationFrame(() => fitDynamicText(msgElement));
+        window.addEventListener('resize', () => fitDynamicText(msgElement));
         const leavesContainer = document.getElementById('leaves-container');
-        const leafCount = 15; 
-
-        for (let i = 0; i < leafCount; i++) {
+        for (let i = 0; i < 15; i++) {
           const leafWrapper = document.createElement('div');
-          leafWrapper.classList.add('leaf-wrapper');
-          
-          // Use Image Tag instead of SVG
+          leafWrapper.className = 'leaf-wrapper';
           const leafImg = document.createElement('img');
           leafImg.src = '../images/leaf_gorseli.png';
-          leafImg.classList.add('leaf-image');
-          leafImg.alt = '';
-          
+          leafImg.className = 'leaf-image';
           leafWrapper.appendChild(leafImg);
-          
-          // Randomize Properties
-          const left = Math.random() * 100; // Random horizontal pos
-          const duration = 10 + Math.random() * 8; // Fall duration
-          const swayDuration = 3 + Math.random() * 3; // Gondola swing duration
-          
-          // Reduced Size (Previously 30-70, now 15-35)
-          const size = 15 + Math.random() * 20; 
-          
-          const delay = Math.random() * 10; 
-
-          leafWrapper.style.left = left + '%';
-          leafWrapper.style.width = size + 'px';
-          leafWrapper.style.animationDuration = duration + 's';
-          leafWrapper.style.animationDelay = '-' + delay + 's';
-          
-          // Independent sway timing
-          leafImg.style.animationDuration = swayDuration + 's';
-
+          const size = 15 + Math.random() * 20;
+          leafWrapper.style.cssText = `left:${Math.random()*100}%;width:${size}px;animation-duration:${10+Math.random()*8}s;animation-delay:-${Math.random()*10}s;`;
+          leafImg.style.animationDuration = (3+Math.random()*3) + 's';
           leavesContainer.appendChild(leafWrapper);
         }
       });
