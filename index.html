@@ -1,104 +1,196 @@
-<!-- UPDATE CHECKPOINT: v9.2 - Open Graph Title Update -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta property="og:title" content="Merry Christmas">
-    <meta property="og:description" content="Click to view your personalized greeting card.">
-    <meta property="og:type" content="website">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta id="theme-color-meta" name="theme-color" content="#0f2b1d" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSG9saWRheSBDYXJkIiwic2hvcnRfbmFtZSI6IkdpZnQiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjMGYyYjFkIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjJiMWQifQ==" />
-    <title>Holiday Card</title>
+    <meta name="theme-color" content="#0f2b1d" />
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="The Special Greetings | Animated Digital Cards">
+    <meta property="og:description" content="Discover unique animated digital greeting cards for your loved ones on our Etsy shop.">
+    <meta property="og:type" content="website">
+    
+    <title>The Special Greetings - Animated Digital Cards</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-      :root { --color-bg-dark: #0f2b1d; --color-bg-light: #1A4731; --color-gold-start: #F2D06B; --color-gold-end: #B38728; }
-      html { background-color: var(--color-bg-dark); height: 100%; transition: background-color 0.5s ease; }
-      body { margin: 0; padding: 0; width: 100%; height: 100dvh; background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%); font-family: 'Dancing Script', cursive; overflow: hidden; -webkit-font-smoothing: antialiased; position: fixed; left: 0; top: 0; right: 0; bottom: 0; }
-      .app-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); box-sizing: border-box; }
-      .card-content { position: relative; width: 100%; height: 100%; max-width: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; box-sizing: border-box; }
-      .text-section { text-align: center; width: 100%; margin-top: 40px; margin-bottom: 2vh; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 150px; }
-      .dynamic-message { font-family: 'Dancing Script', cursive; color: var(--color-gold-start); font-weight: 700; background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; line-height: 1.2; padding: 0 0.5rem; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); word-wrap: break-word; overflow-wrap: break-word; text-align: center; width: 100%; }
-      @keyframes shine { to { background-position: 200% center; } }
-      .image-container { width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; overflow: hidden; margin-bottom: 2vh; max-height: 55vh; }
-      .main-image { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
-      .fallback-icon { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; animation: float 3s ease-in-out infinite; }
-      .fallback-icon svg { fill: var(--color-gold-start); filter: drop-shadow(0 0 10px rgba(242, 208, 107, 0.5)); }
-      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-      .snowfall-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
-      .snowflake { position: absolute; background-color: white; border-radius: 50%; filter: blur(1px); top: -20px; opacity: 0.8; }
-      @keyframes fall { 0% { transform: translateY(-20px) translateX(0px); opacity: 0; } 10% { opacity: 0.9; } 100% { transform: translateY(110vh) translateX(20px); opacity: 0.2; } }
-      .corner-decoration { position: fixed; width: 80px; height: 80px; pointer-events: none; z-index: 9999; opacity: 0.9; }
-      .corner-dot { fill: var(--color-bg-dark); transition: fill 0.5s ease; }
-      .top-left { top: 0; left: 0; margin-top: env(safe-area-inset-top); margin-left: env(safe-area-inset-left); }
-      .top-right { top: 0; right: 0; transform: scaleX(-1); margin-top: env(safe-area-inset-top); margin-right: env(safe-area-inset-right); }
-      .bottom-left { bottom: 0; left: 0; transform: scaleY(-1); bottom: calc(env(safe-area-inset-bottom) + 10px); margin-left: env(safe-area-inset-left); }
-      .bottom-right { bottom: 0; right: 0; transform: scale(-1); bottom: calc(env(safe-area-inset-bottom) + 10px); margin-right: env(safe-area-inset-right); }
-      #rotate-overlay { display: none; position: fixed; inset: 0; background-color: var(--color-bg-dark); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: var(--color-gold-start); text-align: center; }
-      #rotate-overlay svg { width: 80px; height: 80px; fill: var(--color-gold-start); margin-bottom: 20px; animation: rotate-phone 2s infinite ease-in-out; }
-      @keyframes rotate-phone { 0%, 10% { transform: rotate(90deg); } 50%, 60% { transform: rotate(0deg); } 100% { transform: rotate(90deg); } }
-      @media screen and (max-height: 550px) and (orientation: landscape) { #rotate-overlay { display: flex; } .app-container { visibility: hidden; } }
+      :root {
+        --color-bg-dark: #0f2b1d;
+        --color-bg-light: #1A4731;
+        --color-gold-start: #F2D06B;
+        --color-gold-end: #B38728;
+        --color-white: #ffffff;
+      }
+
+      * { box-sizing: border-box; }
+
+      body, html {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+        background-color: var(--color-bg-dark);
+        font-family: 'Inter', sans-serif;
+        color: var(--color-white);
+        overflow-x: hidden;
+      }
+
+      body {
+        background: radial-gradient(circle at center, var(--color-bg-light) 0%, var(--color-bg-dark) 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100dvh;
+        text-align: center;
+      }
+
+      .landing-container {
+        max-width: 800px;
+        padding: 2rem;
+        z-index: 10;
+        animation: fadeIn 1.5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .brand-title {
+        font-family: 'Dancing Script', cursive;
+        font-size: clamp(3rem, 10vw, 5rem);
+        margin: 0;
+        background: linear-gradient(to right, #F2D06B, #dbb452, #B38728, #dbb452, #F2D06B);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 5s linear infinite;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      }
+
+      @keyframes shine {
+        to { background-position: 200% center; }
+      }
+
+      .tagline {
+        font-size: clamp(1.2rem, 4vw, 1.8rem);
+        font-weight: 300;
+        margin-top: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        letter-spacing: 1px;
+      }
+
+      .description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin: 2.5rem auto;
+        max-width: 600px;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 300;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 1.2rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--color-bg-dark);
+        background: linear-gradient(135deg, var(--color-gold-start), var(--color-gold-end));
+        border-radius: 50px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        border: none;
+        cursor: pointer;
+      }
+
+      .cta-button:hover {
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 15px 30px rgba(179, 135, 40, 0.4);
+      }
+
+      .cta-button:active {
+        transform: scale(0.98);
+      }
+
+      /* Decorative Elements */
+      .bg-decor {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0; left: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .snowflake {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+        opacity: 0.15;
+        filter: blur(1px);
+        animation: float 20s linear infinite;
+      }
+
+      @keyframes float {
+        0% { transform: translateY(-10vh) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(360deg); }
+      }
+
+      footer {
+        position: absolute;
+        bottom: 2rem;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.4);
+        width: 100%;
+      }
+
+      @media (max-width: 600px) {
+        .landing-container { padding: 1.5rem; }
+        .description { margin: 1.5rem auto; }
+      }
     </style>
   </head>
   <body>
-    <svg width="0" height="0"><defs><linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F2D06B" /><stop offset="40%" stop-color="#B38728" /><stop offset="60%" stop-color="#F2D06B" /><stop offset="100%" stop-color="#B38728" /></linearGradient></defs></svg>
-    <div id="rotate-overlay"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg><h2>Please Rotate Your Device</h2></div>
-    <div id="snowfall-container" class="snowfall-container"></div>
-    <svg class="corner-decoration top-left" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
-    <svg class="corner-decoration top-right" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
-    <svg class="corner-decoration bottom-left" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
-    <svg class="corner-decoration bottom-right" viewBox="0 0 100 100"><path d="M5,100 L5,5 L100,5" stroke="url(#gold-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="5" cy="5" r="8" fill="url(#gold-gradient)"/><circle cx="5" cy="5" r="3" class="corner-dot"/></svg>
-    <div class="app-container">
-      <div class="card-content">
-        <div class="text-section"><h1 id="dynamic-message" class="dynamic-message"></h1></div>
-        <div class="image-container">
-           <div id="fallback-icon" class="fallback-icon"><svg viewBox="0 0 24 24" width="150" height="150"><path d="M20 12v10H4V12h16zm-9-6c1.1 0 2 .9 2 2h2c0-2.21-1.79-4-4-4s-4 1.79-4 4h2c0-1.1.9-2 2-2zm-3.13 4l-1.8 2h9.86l-1.8-2H7.87zM22 10h-4c0-3.31-2.69-6-6-6s-6 2.69-6 6H2v2h20v-2z"/></svg></div>
-           <img id="main-image" src="images/yilbasi_gorseli.png" alt="Holiday Card" class="main-image" onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';"/>
-        </div>
-      </div>
+    <div class="bg-decor" id="decor-container"></div>
+    
+    <div class="landing-container">
+      <h1 class="brand-title">The Special Greetings</h1>
+      <p class="tagline">Celebrate Life’s Most Beautiful Moments</p>
+      
+      <p class="description">
+        Make every occasion unforgettable for your loved ones. Discover our collection of 
+        unique, high-quality <strong>animated digital greeting cards</strong> designed 
+        to send smiles across any distance.
+      </p>
+      
+      <a href="https://cutelittlefoxdesign.etsy.com" class="cta-button" target="_blank" rel="noopener">
+        Visit Our Etsy Shop
+      </a>
     </div>
+
+    <footer>
+      &copy; 2024 The Special Greetings. All rights reserved.
+    </footer>
+
     <script>
-      function fitDynamicText(el, maxLines = 3) {
-        const isMobile = window.innerWidth <= 600;
-        // Increased by approx 2pt (3px)
-        let fontSize = isMobile ? 51 : 67; 
-        el.style.fontSize = fontSize + 'px';
-        el.style.whiteSpace = 'normal';
-        function isOverLimit() {
-          const style = window.getComputedStyle(el);
-          const lineHeight = parseFloat(style.lineHeight);
-          const height = el.getBoundingClientRect().height;
-          const limit = lineHeight * maxLines + 2;
-          return height > limit;
-        }
-        while (isOverLimit() && fontSize > 10) { fontSize -= 1; el.style.fontSize = fontSize + 'px'; }
+      // Subtle background animation (Snow/Dust particles)
+      const decorContainer = document.getElementById('decor-container');
+      const particleCount = 30;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'snowflake';
+        const size = Math.random() * 3 + 1;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+        particle.style.animationDelay = '-' + (Math.random() * 20) + 's';
+        decorContainer.appendChild(particle);
       }
-      document.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const msgElement = document.getElementById('dynamic-message');
-        const encodedData = params.get('msg') || params.get('ad');
-        let textContent = "Merry Christmas";
-        if (encodedData) {
-          try { textContent = decodeURIComponent(escape(window.atob(encodedData))); } 
-          catch (e) { try { textContent = atob(encodedData); } catch (err) {} }
-        }
-        msgElement.textContent = textContent;
-        requestAnimationFrame(() => fitDynamicText(msgElement));
-        window.addEventListener('resize', () => fitDynamicText(msgElement));
-        const snowContainer = document.getElementById('snowfall-container');
-        for (let i = 0; i < 40; i++) {
-          const flake = document.createElement('div');
-          flake.className = 'snowflake';
-          const size = 3 + Math.random() * 4;
-          flake.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;opacity:${0.2+Math.random()*0.5};animation:fall ${10+Math.random()*10}s linear infinite;animation-delay:-${Math.random()*10}s;`;
-          snowContainer.appendChild(flake);
-        }
-      });
     </script>
   </body>
 </html>
